@@ -4,3 +4,4 @@ nfts/attributes/*
 nfts/images/*
 .env
 .temp
+.DS_Store
