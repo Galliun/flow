@@ -12,31 +12,34 @@ import inquirer from 'inquirer';
 
 // Local imports
 import config from "../config.json" assert { type: "json" };
-import { DEVNET, MAINNET } from "../constants.js";
-import { updateConfig } from '../utils/configUtils.js';
 import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../utils/waterCooler.js";
 
 
+// Display the price of a Water Cooler in $SUI
 export const coolerPrice = async () => {
   const price = await getCoolerPrice();
   console.log("Water Cooler price is:", `${mistToSui(price)} $SUI`);
 }
 
+// Get the price for buying a Water Cooler from the Water Cooler protocol
+// from the Water Cooler Factory
 export const getCoolerPrice = async () => {
   return new Promise(async (res, rej) => {
     const client = getClient();
+    const coolerFactoryId = getCoolerFactoryId();
 
-    const cooler_factory = await client.getObject({
-      id: config.cooler_factory,
+    const coolerFactory = await client.getObject({
+      id: coolerFactoryId,
       // fetch the object content field
       options: { showContent: true },
     });
 
-    res(cooler_factory?.data?.content?.fields?.price);
+    res(coolerFactory?.data?.content?.fields?.price);
   });
 }
 
-
+// Buy a Water Cooler from the Factory in the Water Cooler Protocol
 export const buyWaterCooler = async () => {
   const price = await getCoolerPrice();
 
@@ -49,54 +52,49 @@ export const buyWaterCooler = async () => {
     }
   ]);
 
-  // Execute buy order from smart contract
+  // Execute buy order to protocol
   if(answers.confirm == "y") {
-    console.log(`Buy Water Cooler now.`);
+    console.log(`Ordering Water Cooler now.`);
+
+    const CoolerDetails = await getWaterCoolerDetails();
+
+    console.log("Shipping... Your Water Cooler will arrive soon");
+
+    const { name, description, size, treasury, image_url } = CoolerDetails;
 
     const keypair = getKeypair();
     const client = getClient();
   
-    const packageId = config.water_cool_package_id;
+    const packageId = getPacakgeId();
     const tx = new TransactionBlock();
-
-    const name = "My First Cooler";
-    const description = "Launching the best NFT collection ever.";
-    const image_url = "https://i.pinimg.com/564x/69/4d/e7/694de75fb07176e33e435e9938da1f60.jpg";
-    const size = 10;
-    const treasury = getAddress();
-
-
-    const [coin] = tx.splitCoins(tx.gas, [price]);
 
     tx.setGasBudget(config.gasBudgetAmount);
 
-    console.log("coin", coin);
+    const [coin] = tx.splitCoins(tx.gas, [price]);
 
-    const res = tx.moveCall({
+    const coolerFactoryId = getCoolerFactoryId();
+
+    tx.moveCall({
       target: `${packageId}::cooler_factory::buy_water_cooler`,
       arguments: [
-        tx.object(config.cooler_factory), coin,
+        tx.object(coolerFactoryId), coin,
         tx.pure.string(name), tx.pure.string(description),
         tx.pure.string(image_url), tx.pure.u16(size),
         tx.pure.address(treasury)
       ]
     });
-
-    console.log("res", res);
   
     const result = await client.signAndExecuteTransactionBlock({
       signer: keypair,
       transactionBlock: tx,
 
     });
-
-    console.log("result:", { result });
   
-    const writeStream = fs.createWriteStream("./water_cooler.json", { flags: 'w' });
+    const writeStream = fs.createWriteStream("./.outputs/water_cooler.json", { flags: 'w' });
       writeStream.write(JSON.stringify(result, null, 4));
       writeStream.end();
   
-    console.log("write done");
+    console.log("Your Water Cooler has arrived.");
 
 
   } else {
