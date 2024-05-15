@@ -1,0 +1,6 @@
+{
+    "water_cool_package_id": "0xa6c0baa54ee822b8cdda32fb5ca5d3b42771c1566c4e6fb743f989131b4506fb",
+    "cooler_factory": "0x8550a078f5d2381dee6c3a0e763527e090b7a4229a32faefa96bd2ba4c949c6b",
+    "gasBudgetAmount": 1000000000,
+    "network": "devnet"
+}
