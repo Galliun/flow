@@ -14,6 +14,8 @@ import inquirer from 'inquirer';
 import config from "../config.json" assert { type: "json" };
 import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
 import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../utils/waterCooler.js";
+import { getObjectId } from "../utils/getObjectId.js";
+import { WATER_COOLER, WATER_COOLER_ADMIN } from "../constants.js";
 
 
 // Display the price of a Water Cooler in $SUI
@@ -87,11 +89,22 @@ export const buyWaterCooler = async () => {
     const result = await client.signAndExecuteTransactionBlock({
       signer: keypair,
       transactionBlock: tx,
+    });
 
+    const objectChange = await client.getTransactionBlock({
+      digest: result?.digest,
+      // only fetch the effects field
+      options: {
+        showEffects: false,
+        showInput: false,
+        showEvents: false,
+        showObjectChanges: true,
+        showBalanceChanges: false,
+      },
     });
   
     const writeStream = fs.createWriteStream("./.outputs/water_cooler.json", { flags: 'w' });
-      writeStream.write(JSON.stringify(result, null, 4));
+      writeStream.write(JSON.stringify(objectChange, null, 4));
       writeStream.end();
   
     console.log("Your Water Cooler has arrived.");
@@ -102,12 +115,59 @@ export const buyWaterCooler = async () => {
   }
 }
 
-export const mint = async () => {
-  console.log("Mint NFT");
-}
-
 export const init = async () => {
   console.log("Initiate Water Cooler");
+  const waterCoolerObjectId = await getObjectId(WATER_COOLER);
+  console.log("objectId", waterCoolerObjectId);
+  
+  const waterCoolerAdminObjectId = await getObjectId(WATER_COOLER_ADMIN);
+  console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
+
+  const keypair = getKeypair();
+  const client = getClient();
+
+  const packageId = getPacakgeId();
+  const tx = new TransactionBlock();
+
+  tx.setGasBudget(config.gasBudgetAmount);
+
+  tx.moveCall({
+    target: `${packageId}::water_cooler::admin_initialize_water_cooler`,
+    arguments: [
+      tx.object(waterCoolerAdminObjectId),
+      tx.object(waterCoolerObjectId)
+    ]
+  });
+
+  const result = await client.signAndExecuteTransactionBlock({
+    signer: keypair,
+    transactionBlock: tx,
+  });
+
+  console.log("result", result);
+
+  const objectChange = await client.getTransactionBlock({
+    digest: result?.digest,
+    // only fetch the effects field
+    options: {
+      showEffects: false,
+      showInput: false,
+      showEvents: false,
+      showObjectChanges: true,
+      showBalanceChanges: false,
+    },
+  });
+
+  const writeStream = fs.createWriteStream("./.outputs/initialization.json", { flags: 'w' });
+    writeStream.write(JSON.stringify(objectChange, null, 4));
+    writeStream.end();
+
+  console.log("Your Water Cooler has arrived.");
+}
+
+
+export const mint = async () => {
+  console.log("Mint NFT");
 }
 
 export const settings = async () => {
