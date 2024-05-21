@@ -6,7 +6,7 @@ import * as inquirer from 'inquirer';
 
 import { getCurrentNetwork, switchNetwork } from './functions/flowConfig.js';
 import { balance, faucet } from './functions/sui.js';
-import { coolerPrice, buyWaterCooler, init, mint, settings } from './functions/waterCooler.js';
+import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from './functions/waterCooler.js';
 
 const program = new Command();
 
@@ -44,7 +44,11 @@ program.command('init')
   .description('Initiate Water Cooler for mint')
   .action(init);
 
-program.command('mint')
+program.command('stock')
+  .description('Stock NFTs in Water Cooler in preperation for mint')
+  .action(stock);
+
+  program.command('mint')
   .description('Mint NFT from deployed Water Cooler')
   .action(mint);
 
