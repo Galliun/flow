@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import 'dotenv/config';
 import config from "../config.json" assert { type: "json" };
-import { DEVNET, MAINNET } from "../constants.js";
+import { DEVNET, MAINNET, TESTNET } from "../constants.js";
 import { updateConfig } from '../utils/configUtils.js';
 
 import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui.js/faucet';
@@ -11,7 +11,7 @@ export const getCurrentNetwork = () => {
 }
 
 export const switchNetwork = async (network) => {
-  if (network == DEVNET || network == MAINNET) {
+  if (network == DEVNET || network == MAINNET || network == TESTNET) {
     await updateConfig("network", network);
     console.log("Network updated to:", network);
   } else {

@@ -2,25 +2,27 @@ import 'dotenv/config';
 import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui.js/faucet';
 
 import config from "../config.json" assert { type: "json" };
-import { DEVNET } from "../constants.js";
+import { DEVNET, TESTNET } from "../constants.js";
 import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
 
 
 export const faucet = async () => {
-  if(config.network == DEVNET) {
-    console.log("Requesting Sui from faucet.");
+  return new Promise(async (res, rej) => {
+    if(config.network == DEVNET || config.network == TESTNET) {
+      console.log("Requesting Sui from faucet.");
 
-    const address = getAddress();
+      const address = getAddress();
 
-    await requestSuiFromFaucetV0({
-      host: getFaucetHost(DEVNET),
-      recipient: address
-    });
-    
-    balance();
-  } else {
-    console.log("Faucet is only available on devnet and testnet.");
-  }
+      await requestSuiFromFaucetV0({
+        host: getFaucetHost(config.network),
+        recipient: address
+      });
+      
+      balance();
+    } else {
+      console.log("Faucet is only available on devnet and testnet.");
+    }
+  })
 }
 
 export const balance = async () => {
