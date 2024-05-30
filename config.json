@@ -1,11 +1,11 @@
 {
     "devnet": {
-        "packageId": "0xcccc7851f88a32319bfb17db52d480c48174e78f15cccb03f6568243dbe8c399",
-        "coolerFactoryId": "0xabe6409dfd818b2749f4614570912c0603c7fbcd70e0bdaa95321bb43a42f6fc"
+        "packageId": "0x2673ee86afb9370e58d587e05af994a182c60290a18d8f4d0b4dfaaad1c84b6d",
+        "coolerFactoryId": "0xe091a2ff703069884731c4e17588c6fa09488491605b1e404fe23639257ab6a6"
     },
     "testnet": {
-        "packageId": "0x775314761a26139cb3baeb62e428186f12c9f3a42421651c1f8321b687fdef96",
-        "coolerFactoryId": "0x59bec4a05553d8246e9c13a7abd40dacfb0e11be6c581d9c8157bb9c3d5caa01"
+        "packageId": "",
+        "coolerFactoryId": ""
     },
     "mainnet": {
         "packageId": "",

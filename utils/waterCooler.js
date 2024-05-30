@@ -5,6 +5,8 @@ import inquirer from 'inquirer';
 
 import config from "../config.json" assert { type: "json" };
 
+export const delay = ms => new Promise(res => setTimeout(res, ms));
+
 export const getPacakgeId = () => {
   return config[config.network].packageId;
 }

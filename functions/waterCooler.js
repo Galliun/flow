@@ -14,7 +14,7 @@ import inquirer from 'inquirer';
 // Local imports
 import config from "../config.json" assert { type: "json" };
 import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../utils/waterCooler.js";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../utils/waterCooler.js";
 import { getObjectId } from "../utils/getObjectId.js";
 import { getObjectIdArray } from "../utils/getObjectIdArray.js";
 import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../constants.js";
@@ -111,6 +111,9 @@ export const buyWaterCooler = async () => {
       transactionBlock: tx,
     });
 
+    // Wait for the transaction to be finalised
+    await delay(5000); // Wait 5 seconds
+
     const objectChange = await client.getTransactionBlock({
       digest: result?.digest,
       // only fetch the effects field
@@ -139,7 +142,6 @@ export const buyWaterCooler = async () => {
   
     console.log("Your Water Cooler has arrived.");
 
-
   } else {
     console.log(`Buy order canceled.`);
   }
@@ -147,11 +149,13 @@ export const buyWaterCooler = async () => {
 
 export const init = async () => {
   console.log("Initiate Water Cooler");
+
+
   const waterCoolerObjectId = await getObjectId(WATER_COOLER);
-  console.log("objectId", waterCoolerObjectId);
+  // console.log("objectId", waterCoolerObjectId);
   
   const waterCoolerAdminObjectId = await getObjectId(WATER_COOLER_ADMIN);
-  console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
+  // console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
 
   const keypair = getKeypair();
   const client = getClient();
@@ -174,7 +178,10 @@ export const init = async () => {
     transactionBlock: tx,
   });
 
-  console.log("result", result);
+  // console.log("result", result);
+
+  // Wait for the transaction to be finalised
+  await delay(5000); // Wait 5 seconds
 
   const objectChange = await client.getTransactionBlock({
     digest: result?.digest,
@@ -202,7 +209,7 @@ export const init = async () => {
     writeStream.write(JSON.stringify(objectChange, null, 4));
     writeStream.end();
 
-  console.log("Your Water Cooler has arrived.");
+  console.log("Your Water Cooler has been initiated.");
 }
 
 export const stock = async () => {
@@ -264,80 +271,7 @@ export const stock = async () => {
     },
   });
 
-  // console.log("mizuNFT", mizuNFT);
-
-
-  // define UID as a 32-byte array, then add a transform to/from hex strings
-  // const UID = bcs.fixedArray(32, bcs.u8()).transform({
-  //   input: (id) => fromHEX(id),
-  //   output: (id) => toHEX(Uint8Array.from(id)),
-  // });
-
-  // const AttributesStruct = bcs.struct("Attributes", {
-  //   id: bcs.Address,
-  //   number: bcs.u16(),
-  //   fields: "AttributesData"
-  // })
-  
-  // const MizuNFTStruct = bcs.struct("MizuNFT", {
-  //   id: bcs.Address,
-  //   name: bcs.String,
-  //   collection_name: bcs.String,
-  //   description: bcs.String,
-  //   image_url: bcs.String,
-  //   number: bcs.u16(),
-  //   attributes: bcs.option(AttributesStruct),
-  //   image: bcs.option(bcs.String),
-  //   minted_by: bcs.option(bcs.Address),
-  //   kiosk_id: bcs.Address,
-  //   kiosk_owner_cap_id: bcs.Address,
-  // })
-
-  // Same for the main object that we intend to read
-// const Attributes = bcs.registerStructType("Attributes", {
-//   id: bcs.u64(),
-//   number: bcs.u16(),
-//   fields: "AttributesData"
-// });
-
-// Error: Struct MizuNFT requires field name:MizuNFT
-
-// const Attributes = bcs.registerStructType("Attributes", AttributesStruct);
-
-// const MizuNFT = bcs.registerStructType("MizuNFT", {
-//     id: bcs.u64,
-//     collection_name: bcs.String,
-//     description: bcs.String,
-//     image_url: bcs.String,
-//     number: bcs.u16(),
-//     attributes: bcs.option(Attributes),
-//     image: bcs.option(bcs.String),
-//     minted_by: bcs.option(bcs.Address),
-//     kiosk_id: bcs.Address,
-//     kiosk_owner_cap_id: bcs.Address,
-// });
-
-// const MizuNFT = bcs.registerStructType("MizuNFT", MizuNFTStruct);
-
     const mizuNFTObjects = mizuNFTIdArray.map(nftId => tx.object(nftId));
-
-    // console.log("mizuNFTObjects", mizuNFTObjects);
-
-    // const mizuNFTObjects = mizuNFTs.map(nft => {
-    //   console.log("mizuNFTs", nft.data.content?.fields);
-    //   nft.data.content?.fields
-    // });
-
-    // console.log("mizuNFTs", mizuNFTs[0].data.content?.fields);
-
-    // console.log("mizuNFTs", mizuNFTObjects[0]);
-    // console.log("tx.object(mintAdminCapObjectId),", tx.object(mintAdminCapObjectId),);
-  
-    // const stringList = bcs.vector(mizuNFTs[0].data.type).serialize(mizuNFTs).toBytes();
-    // const stringList = bcs.vector(bcs.string()).serialize(mizuNFTIdArray).toBytes();
-    // const stringList = bcs.vector(bcs.string()).serialize(mizuNFTIdArray).toBytes();
-    
-    // const stringList = bcs.vector(MizuNFTStruct).serialize(mizuNFTObjects).toBytes();
 
   tx.moveCall({
     target: `${packageId}::mint::admin_add_to_mint_warehouse`,
@@ -387,19 +321,6 @@ export const stock = async () => {
     writeStream.end();
 
   console.log("The Water Cooler has been stocked.");
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

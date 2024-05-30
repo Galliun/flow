@@ -80,3 +80,30 @@ Arguments:
 Options:
   -h, --help  display help for command
 ```
+
+## Walk through
+First you buy a Water Cooler using the following command:
+```
+flow buy
+```
+Then you enter the details of your NFT collection. Once the buy process is complete you then initilise the minting structure.
+
+```
+flow init
+```
+
+Then you stock the Water cooler. This adds the base NFT that were created into the minting structure.
+
+```
+flow stock
+```
+
+You can then use the settings command to make changes to things like the name on the collection, mint price, mint phase.
+```
+flow setting [options]
+```
+
+And then you are ready to go. Use the mint command to mint your first NFT.
+```
+flow mint
+```
