@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import 'dotenv/config';
 import config from "../../config.json" assert { type: "json" };
 import { DEVNET, MAINNET, TESTNET } from "../constants.js";

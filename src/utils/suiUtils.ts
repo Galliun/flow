@@ -22,7 +22,7 @@ export const getAddress = () => {
 //  Get Sui client using the current network
 export const getClient = () => {
   return new SuiClient({
-    url: getFullnodeUrl(config.network),
+    url: getFullnodeUrl(config.network as any),
   });
 }
 
@@ -30,6 +30,6 @@ export const getClient = () => {
 export const mistToSui = (rawMist) => {
   const mist = parseInt(rawMist);
   const divisor = Math.pow(10, SUI_DECIMALS);
-  const balance = parseFloat(mist).toFixed(9) / (divisor).toFixed(9);
+  const balance = mist / divisor;
   return balance.toFixed(9);
 }

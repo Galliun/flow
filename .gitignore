@@ -5,3 +5,4 @@ nfts/images/*
 .temp
 .DS_Store
 .outputs/*
+build

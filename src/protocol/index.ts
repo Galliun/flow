@@ -37,7 +37,10 @@ export const getCoolerPrice = async () => {
       options: { showContent: true },
     });
 
-    res(coolerFactory?.data?.content?.fields?.fee);
+    // To Do: fix this any casting
+    const response = coolerFactory?.data?.content as any;    
+
+    res(response?.fields?.fee);
   });
 }
 
@@ -116,7 +119,7 @@ export const buyWaterCooler = async () => {
       console.error(err);
     }
   
-    const writeStream = fs.createWriteStream("./.outputs/water_cooler.json", { flags: 'w' });
+    const writeStream = fs.createWriteStream("../../.outputs/water_cooler.json", { flags: 'w' });
       writeStream.write(JSON.stringify(objectChange, null, 4));
       writeStream.end();
   
@@ -194,7 +197,9 @@ export const init = async () => {
 
 export const stock = async () => {
   console.log("Stocking water Cooler with NFTs now");
-  const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT);
+
+  // To Do: Fix this "any" casting
+  const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT) as any;
   // console.log("mizuNFTIdArray", mizuNFTIdArray);
 
   const waterCoolerObjectId = await getObjectId(WATER_COOLER);
@@ -212,39 +217,8 @@ export const stock = async () => {
 
   tx.setGasBudget(config.gasBudgetAmount);
 
-  const mizuNFTs = await client.multiGetObjects({
-    ids: mizuNFTIdArray,
-    // only fetch the object type
-    options: { 
-      showType: true,
-      showBcs: true,
-      showContent: true,
-      showDisplay: true,
-      showOwner: true,
-      showPreviousTransaction: true,
-      showStorageRebate: true
-    },
-  });
 
-  // console.log("mizuNFTs", mizuNFTs);
-
-  mizuNFTs.map(nft => console.log(nft.data?.content?.fields))
-  
-  const mizuNFT = await client.getObject({
-    id: mizuNFTIdArray[0],
-    // only fetch the object type
-    options: { 
-      // showType: true,
-      // showBcs: true,
-      showContent: true,
-      // showDisplay: true,
-      // showOwner: true,
-      // showPreviousTransaction: true,
-      // showStorageRebate: true
-    },
-  });
-
-    const mizuNFTObjects = mizuNFTIdArray.map(nftId => tx.object(nftId));
+  const mizuNFTObjects = mizuNFTIdArray.map(nftId => tx.object(nftId));
 
   tx.moveCall({
     target: `${packageId}::mint::admin_add_to_mint_warehouse`,
@@ -289,7 +263,7 @@ export const stock = async () => {
       console.error(err);
     }
 
-  const writeStream = fs.createWriteStream("./.outputs/warehouse.json", { flags: 'w' });
+  const writeStream = fs.createWriteStream("../.outputs/warehouse.json", { flags: 'w' });
     writeStream.write(JSON.stringify(objectChange, null, 4));
     writeStream.end();
 

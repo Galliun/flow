@@ -2,13 +2,14 @@
   "name": "flow",
   "version": "0.1.0",
   "description": "Command line tool for deploying and managing NFT collections on the Sui blockchain.",
-  "main": "index.js",
+  "main": "./build/src/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "bin": {
-    "flow": "index.js"
+    "flow": "./build/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,9 @@
     "commander": "^12.0.0",
     "dotenv": "^16.4.5",
     "inquirer": "^8.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.5.2"
   }
 }

@@ -1,11 +1,11 @@
 #!/usr/bin/env -S node --no-warnings=ExperimentalWarning
 
-import packageInfo from './package.json' assert { type: "json" };
+import packageInfo from '../package.json' assert { type: "json" };
 import { Command } from 'commander';
 
-import { getCurrentNetwork, switchNetwork } from './src/helpers/flowConfig.js';
-import { balance, faucet } from './src/helpers/sui.js';
-import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from './src/protocol/index.js';
+import { getCurrentNetwork, switchNetwork } from '../src/helpers/flowConfig.js';
+import { balance, faucet } from '../src/helpers/sui.js';
+import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from '../src/protocol/index.js';
 
 const program = new Command();
 
@@ -51,12 +51,12 @@ program.command('stock')
   .description('Mint NFT from deployed Water Cooler')
   .action(mint);
 
-program.command('setting')
-  .description('Change setting on your Water Cooler')
-  .option('-a, --amount <price>', 'Change the NFT mint price')
-  .option('-p, --phase <phase>', 'Change the current phase of the Water Cooler. e.g. 0: unset, 1: public mint')
-  .action((input, options) => {
-    settings(input, options)
-  });
+// program.command('setting')
+//   .description('Change setting on your Water Cooler')
+//   .option('-a, --amount <price>', 'Change the NFT mint price')
+//   .option('-p, --phase <phase>', 'Change the current phase of the Water Cooler. e.g. 0: unset, 1: public mint')
+//   .action((input, options) => {
+//     settings(input, options)
+//   });
   
 program.parse(process.argv);
