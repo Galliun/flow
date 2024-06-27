@@ -12,31 +12,12 @@ import { bcs } from '@mysten/sui.js/bcs';
 import inquirer from 'inquirer';
 
 // Local imports
-import config from "../config.json" assert { type: "json" };
-import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../utils/waterCooler.js";
-import { getObjectId } from "../utils/getObjectId.js";
-import { getObjectIdArray } from "../utils/getObjectIdArray.js";
-import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../constants.js";
-
-
-const toHEX = (s) => {
-  // utf8 to latin1
-  var s = unescape(encodeURIComponent(s))
-  var h = ''
-  for (var i = 0; i < s.length; i++) {
-      h += s.charCodeAt(i).toString(16)
-  }
-  return h
-}
-
-const fromHEX = (h) => {
-  var s = ''
-  for (var i = 0; i < h.length; i+=2) {
-      s += String.fromCharCode(parseInt(h.substr(i, 2), 16))
-  }
-  return decodeURIComponent(escape(s))
-}
+import config from "../../config.json" assert { type: "json" };
+import { getAddress, getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../../utils/waterCooler.js";
+import { getObjectId } from "../../utils/getObjectId.js";
+import { getObjectIdArray } from "../../utils/getObjectIdArray.js";
+import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../../constants.js";
 
 // Display the price of a Water Cooler in $SUI
 export const coolerPrice = async () => {
@@ -57,7 +38,7 @@ export const getCoolerPrice = async () => {
       options: { showContent: true },
     });
 
-    res(coolerFactory?.data?.content?.fields?.price);
+    res(coolerFactory?.data?.content?.fields?.fee);
   });
 }
 
