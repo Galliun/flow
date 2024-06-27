@@ -2,10 +2,9 @@
 
 import packageInfo from './package.json' assert { type: "json" };
 import { Command } from 'commander';
-import * as inquirer from 'inquirer';
 
-import { getCurrentNetwork, switchNetwork } from './src/flowConfig.js';
-import { balance, faucet } from './src/sui.js';
+import { getCurrentNetwork, switchNetwork } from './src/helpers/flowConfig.js';
+import { balance, faucet } from './src/helpers/sui.js';
 import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from './src/protocol/index.js';
 
 const program = new Command();

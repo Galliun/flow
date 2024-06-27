@@ -4,7 +4,7 @@ import { Ed25519Keypair } from '@mysten/sui.js/keypairs/ed25519';
 import { SUI_DECIMALS } from '@mysten/sui.js/utils';
 import { getFullnodeUrl, SuiClient } from '@mysten/sui.js/client';
 
-import config from "../config.json" assert { type: "json" };
+import config from "../../config.json" assert { type: "json" };
 
 //  Get the Key pair from the provided Seed Phrase in the .env
 export const getKeypair = () => {

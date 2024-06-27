@@ -3,7 +3,7 @@ import 'dotenv/config';
 // Other packages
 import inquirer from 'inquirer';
 
-import config from "../config.json" assert { type: "json" };
+import config from "../../config.json" assert { type: "json" };
 
 export const delay = ms => new Promise(res => setTimeout(res, ms));
 

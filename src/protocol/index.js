@@ -6,18 +6,17 @@ import fs from 'node:fs';
 
 // Sui packages
 import { TransactionBlock } from '@mysten/sui.js/transactions';
-import { bcs } from '@mysten/sui.js/bcs';
 
 // Other packages
 import inquirer from 'inquirer';
 
 // Local imports
 import config from "../../config.json" assert { type: "json" };
-import { getAddress, getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../../utils/waterCooler.js";
-import { getObjectId } from "../../utils/getObjectId.js";
-import { getObjectIdArray } from "../../utils/getObjectIdArray.js";
-import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../../constants.js";
+import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../utils/waterCooler.js";
+import { getObjectId } from "../utils/getObjectId.js";
+import { getObjectIdArray } from "../utils/getObjectIdArray.js";
+import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../constants.js";
 
 // Display the price of a Water Cooler in $SUI
 export const coolerPrice = async () => {
@@ -197,13 +196,6 @@ export const stock = async () => {
   console.log("Stocking water Cooler with NFTs now");
   const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT);
   // console.log("mizuNFTIdArray", mizuNFTIdArray);
-
-
-
-
-
-
-
 
   const waterCoolerObjectId = await getObjectId(WATER_COOLER);
   // console.log("waterCoolerObjectId", waterCoolerObjectId);

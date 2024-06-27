@@ -1,10 +1,8 @@
 import fs from 'node:fs';
 import 'dotenv/config';
-import config from "../config.json" assert { type: "json" };
+import config from "../../config.json" assert { type: "json" };
 import { DEVNET, MAINNET, TESTNET } from "../constants.js";
 import { updateConfig } from '../utils/configUtils.js';
-
-import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui.js/faucet';
 
 export const getCurrentNetwork = () => {
   console.log("Current network:", config.network);

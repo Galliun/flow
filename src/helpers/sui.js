@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui.js/faucet';
 
-import config from "../config.json" assert { type: "json" };
+import config from "../../config.json" assert { type: "json" };
 import { DEVNET, TESTNET } from "../constants.js";
 import { getAddress, getClient, getKeypair, mistToSui } from "../utils/suiUtils.js";
 
@@ -18,7 +18,6 @@ export const faucet = async () => {
         recipient: address
       });
       
-      balance();
     } else {
       console.log("Faucet is only available on devnet and testnet.");
     }

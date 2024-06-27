@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import config from "../config.json" assert { type: "json" };
+import config from "../../config.json" assert { type: "json" };
 
 export const updateConfig = (key, value) => {
   return new Promise(async (res, rej) => {
