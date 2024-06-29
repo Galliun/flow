@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui.js/faucet';
+import { getFaucetHost, requestSuiFromFaucetV0 } from '@mysten/sui/faucet';
 
 import config from "../../config.json" assert { type: "json" };
 import { DEVNET, TESTNET } from "../constants.js";

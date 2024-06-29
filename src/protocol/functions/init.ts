@@ -1,11 +1,11 @@
 // Dependence
 import 'dotenv/config';
 
-// Node packages
+// Node imports
 import fs from 'node:fs';
 
-// Sui packages
-import { TransactionBlock } from '@mysten/sui.js/transactions';
+// Packages imports
+import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
@@ -28,21 +28,21 @@ export default async () => {
   const client = getClient();
 
   const packageId = getPacakgeId();
-  const tx = new TransactionBlock();
+  const tx = new Transaction();
 
   tx.setGasBudget(config.gasBudgetAmount);
 
   tx.moveCall({
     target: `${packageId}::water_cooler::admin_initialize_water_cooler`,
     arguments: [
-      tx.object(waterCoolerAdminObjectId),
-      tx.object(waterCoolerObjectId)
+      tx.object(waterCoolerAdminObjectId as string),
+      tx.object(waterCoolerObjectId as string)
     ]
   });
 
-  const result = await client.signAndExecuteTransactionBlock({
+  const result = await client.signAndExecuteTransaction({
     signer: keypair,
-    transactionBlock: tx,
+    transaction: tx,
   });
 
   // console.log("result", result);

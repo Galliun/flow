@@ -1,13 +1,11 @@
 // Dependence
 import 'dotenv/config';
 
-// Node packages
+// Node imports
 import fs from 'node:fs';
 
-// Sui packages
-import { TransactionBlock } from '@mysten/sui.js/transactions';
-
-// Other packages
+// Packages imports
+import { Transaction } from '@mysten/sui/transactions';
 import inquirer from 'inquirer';
 
 // Local imports

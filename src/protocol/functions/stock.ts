@@ -1,11 +1,11 @@
 // Dependence
 import 'dotenv/config';
 
-// Node packages
+// Node imports
 import fs from 'node:fs';
 
-// Sui packages
-import { TransactionBlock } from '@mysten/sui.js/transactions';
+// Packages imports
+import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
@@ -34,7 +34,7 @@ export default async () => {
   const client = getClient();
 
   const packageId = getPacakgeId();
-  const tx = new TransactionBlock();
+  const tx = new Transaction();
 
   tx.setGasBudget(config.gasBudgetAmount);
 
@@ -44,20 +44,20 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::mint::admin_add_to_mint_warehouse`,
     arguments: [
-      tx.object(mintAdminCapObjectId),
-      tx.object(waterCoolerObjectId),
+      tx.object(mintAdminCapObjectId as string),
+      tx.object(waterCoolerObjectId as string),
       // tx.pure(bcs.vector({ Array: mizuNFTs }).to),
-      tx.makeMoveVec({ objects: mizuNFTObjects }),
+      tx.makeMoveVec({ elements: mizuNFTObjects }),
       // stringList,
       // tx.pure(bcs.ser('vector<MizuNFT>', mizuNFTs).toBytes()),
       // bcs.ser('vector<MizuNFT>', mizuNFTs).toBytes(),
-      tx.object(warehouseObjectId),
+      tx.object(warehouseObjectId as string),
     ]
   });
 
-  const result = await client.signAndExecuteTransactionBlock({
+  const result = await client.signAndExecuteTransaction({
     signer: keypair,
-    transactionBlock: tx,
+    transaction: tx,
   });
 
   console.log("result", result);

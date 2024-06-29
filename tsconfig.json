@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "allowJs": true,
-    "target": "es5",
+    "target": "ESNext",
     "outDir": "./build"
   },
   "include": ["./src/**/*"]

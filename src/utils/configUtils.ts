@@ -1,4 +1,6 @@
+// Node imports
 import fs from 'node:fs';
+
 import config from "../../config.json" assert { type: "json" };
 
 export const updateConfig = (key, value) => {

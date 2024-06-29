@@ -1,6 +1,7 @@
+// Dependence
 import 'dotenv/config';
 
-// Other packages
+// Packages imports
 import inquirer from 'inquirer';
 
 import config from "../../config.json" assert { type: "json" };
