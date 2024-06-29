@@ -20,7 +20,7 @@ export default async () => {
   console.log("Stocking water Cooler with NFTs now");
 
   // To Do: Fix this "any" casting
-  const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT) as any;
+  const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT);
   // console.log("mizuNFTIdArray", mizuNFTIdArray);
 
   const waterCoolerObjectId = await getObjectId(WATER_COOLER);
@@ -44,14 +44,14 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::mint::admin_add_to_mint_warehouse`,
     arguments: [
-      tx.object(mintAdminCapObjectId as string),
-      tx.object(waterCoolerObjectId as string),
+      tx.object(mintAdminCapObjectId),
+      tx.object(waterCoolerObjectId),
       // tx.pure(bcs.vector({ Array: mizuNFTs }).to),
       tx.makeMoveVec({ elements: mizuNFTObjects }),
       // stringList,
       // tx.pure(bcs.ser('vector<MizuNFT>', mizuNFTs).toBytes()),
       // bcs.ser('vector<MizuNFT>', mizuNFTs).toBytes(),
-      tx.object(warehouseObjectId as string),
+      tx.object(warehouseObjectId),
     ]
   });
 

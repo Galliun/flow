@@ -46,7 +46,7 @@ export default async () => {
 
     tx.setGasBudget(config.gasBudgetAmount);
 
-    const [coin] = tx.splitCoins(tx.gas, [price as bigint]);
+    const [coin] = tx.splitCoins(tx.gas, [price]);
 
     const coolerFactoryId = getCoolerFactoryId();
 

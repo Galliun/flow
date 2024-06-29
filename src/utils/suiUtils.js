@@ -24,7 +24,7 @@ export const getAddress = () => {
 //  Get Sui client using the current network
 export const getClient = () => {
   return new SuiClient({
-    url: getFullnodeUrl(config.network as any),
+    url: getFullnodeUrl(config.network),
   });
 }
 

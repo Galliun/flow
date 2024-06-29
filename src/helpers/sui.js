@@ -31,3 +31,8 @@ export const balance = async () => {
 
   console.log(`Current balance: ${convertedBalance} $SUI`);
 }
+
+export const address = async () => {
+  const address = getAddress();
+  console.log(`Your address is: ${address}`);
+}

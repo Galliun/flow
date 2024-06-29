@@ -35,8 +35,8 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::water_cooler::admin_initialize_water_cooler`,
     arguments: [
-      tx.object(waterCoolerAdminObjectId as string),
-      tx.object(waterCoolerObjectId as string)
+      tx.object(waterCoolerAdminObjectId),
+      tx.object(waterCoolerObjectId)
     ]
   });
 

@@ -19,7 +19,7 @@ export const getCoolerPrice = async () => {
     });
 
     // To Do: fix this any casting
-    const response = coolerFactory?.data?.content as any;    
+    const response = coolerFactory?.data?.content;
 
     res(response?.fields?.fee);
   });

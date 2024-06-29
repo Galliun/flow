@@ -3,9 +3,9 @@
 import packageInfo from '../package.json' assert { type: "json" };
 import { Command } from 'commander';
 
-import { getCurrentNetwork, switchNetwork } from '../src/helpers/flowConfig.js';
-import { balance, faucet } from '../src/helpers/sui.js';
-import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from '../src/protocol/index.js';
+import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig.js';
+import { balance, faucet, address } from './helpers/sui.js';
+import { coolerPrice, buyWaterCooler, init, mint, settings, stock } from './protocol/index.js';
 
 const program = new Command();
 
@@ -30,6 +30,10 @@ program.command('balance')
 program.command('faucet')
   .description('Request Sui from network faucet')
   .action(faucet);
+
+  program.command('address')
+  .description('View current current address')
+  .action(address);
 
 program.command('price')
   .description('Get Water Cooler price from the Cooler factory')

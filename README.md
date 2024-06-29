@@ -24,7 +24,6 @@ Setting up Flow is as simple as opening your terminal cloning a git repo and ins
 git clone [repo link]
 cd flow
 npm i
-npm run build
 npm i -g
 ```
 
