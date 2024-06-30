@@ -19,10 +19,10 @@ export default async () => {
   console.log("Initiate Water Cooler");
 
   const waterCoolerObjectId = await getObjectId(WATER_COOLER);
-  // console.log("objectId", waterCoolerObjectId);
-  
+  console.log("objectId", waterCoolerObjectId);
+
   const waterCoolerAdminObjectId = await getObjectId(WATER_COOLER_ADMIN);
-  // console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
+  console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
 
   const keypair = getKeypair();
   const client = getClient();
@@ -33,7 +33,7 @@ export default async () => {
   tx.setGasBudget(config.gasBudgetAmount);
 
   tx.moveCall({
-    target: `${packageId}::water_cooler::admin_initialize_water_cooler`,
+    target: `${packageId}::water_cooler::initialize_water_cooler`,
     arguments: [
       tx.object(waterCoolerAdminObjectId),
       tx.object(waterCoolerObjectId)

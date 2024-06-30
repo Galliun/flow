@@ -36,7 +36,7 @@ export default async () => {
 
     console.log("Shipping... Your Water Cooler will arrive soon");
 
-    const { name, description, size, treasury, image_url } = CoolerDetails;
+    const { name, description, supply, treasury, image_url } = CoolerDetails;
 
     const keypair = getKeypair();
     const client = getClient();
@@ -55,7 +55,7 @@ export default async () => {
       arguments: [
         tx.object(coolerFactoryId), coin,
         tx.pure.string(name), tx.pure.string(description),
-        tx.pure.string(image_url), tx.pure.u16(size),
+        tx.pure.string(image_url), tx.pure.u64(supply),
         tx.pure.address(treasury)
       ]
     });
@@ -90,7 +90,7 @@ export default async () => {
       console.error(err);
     }
   
-    const writeStream = fs.createWriteStream("../../.outputs/water_cooler.json", { flags: 'w' });
+    const writeStream = fs.createWriteStream(".outputs/water_cooler.json", { flags: 'w' });
       writeStream.write(JSON.stringify(objectChange, null, 4));
       writeStream.end();
   
