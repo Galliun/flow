@@ -1,18 +1,38 @@
 {
+    "gasBudgetAmount": 1000000000,
+    "network": "testnet",
     "devnet": {
         "packageId": "",
         "coolerFactoryId": "",
-        "current_water_cooler": ""
+        "current_water_cooler": "",
+        "waterCoolerId": "",
+        "collectionId": "",
+        "mintId": "",
+        "mintSettingId": "",
+        "registryId": "",
+        "mizuNFTIDs": []
     },
     "testnet": {
-        "packageId": "0x0b3c2c0a88cae76d15e06de19441b2ded3919e23192dd6adb449c2c996a4c7b8",
-        "coolerFactoryId": "0xa25f1545a2be7bafb935a2895906c50cafe40ddc962a500ff097d6734af7eb62",
-        "current_water_cooler": ""
+        "packageId": "0xf1652a77a42c12c50e37c98b331f9a9972643681beb9db6d80f29e6176bb04f9",
+        "coolerFactoryId": "0x9ab4232d154bb8acd737859416ca9d8d3359486bae9260e14e6fbf74f4d70084",
+        "current_water_cooler": "",
+        "waterCoolerId": "",
+        "collectionId": "",
+        "mintId": "",
+        "mintSettingId": "",
+        "registryId": "",
+        "mizuNFTIDs": []
     },
     "mainnet": {
         "packageId": "",
         "coolerFactoryId": "",
-        "current_water_cooler": ""
+        "current_water_cooler": "",
+        "waterCoolerId": "",
+        "collectionId": "",
+        "mintId": "",
+        "mintSettingId": "",
+        "registryId": "",
+        "mizuNFTIDs": []
     },
     "og": {
         "price": 0,
@@ -25,7 +45,5 @@
     "public": {
         "price": 0,
         "phase": 3
-    },
-    "gasBudgetAmount": 1000000000,
-    "network": "testnet"
+    }
 }

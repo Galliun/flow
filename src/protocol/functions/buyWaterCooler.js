@@ -66,7 +66,7 @@ export default async () => {
     });
 
     // Wait for the transaction to be finalised
-    await delay(5000); // Wait 5 seconds
+    // await delay(5000); // Wait 5 seconds
 
     const objectChange = await client.getTransactionBlock({
       digest: result?.digest,

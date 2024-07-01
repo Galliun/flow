@@ -35,3 +35,18 @@ export const mistToSui = (rawMist) => {
   const balance = mist / divisor;
   return balance.toFixed(9);
 }
+
+// Convert double Sui to int Mist
+export const suiToMist = (rawSui) => {
+
+  console.log("rawSui", rawSui);
+
+  const sui = parseFloat(rawSui);
+
+  console.log("sui", sui);
+  const multiplier = Math.pow(10, SUI_DECIMALS);
+  const balance = sui * multiplier;
+
+  console.log("balance", balance);
+  return balance;
+}
