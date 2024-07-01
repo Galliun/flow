@@ -29,7 +29,7 @@ npm i -g
 
 Add the seed phrase of the wallet you want to use as the Water Cooler manager in the .env file. Use the .env.dev file as a reference.
 ```
-mv .env.dev .env
+mv .env.example .env
 ```
 
 Update .env file
