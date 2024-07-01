@@ -32,7 +32,7 @@ export const getWaterCoolerDetails = async () => {
     },
     {
       type: "input",
-      name: "size",
+      name: "supply",
       message: `How many NFTs will be in the collection?`
     },
     {

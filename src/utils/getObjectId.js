@@ -6,7 +6,7 @@ import { getPacakgeId } from './waterCooler.js';
 const dataPath = '.outputs/water_cooler.json';
 
 // This is used to read the data into the file as the import is done from the current file location directory
-const waterCoolerData = '../.outputs/water_cooler.json';
+const waterCoolerData = './../../.outputs/water_cooler.json';
 
 export const getObjectId = (type) => {
   return new Promise(async (resolve, reject) => {
