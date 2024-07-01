@@ -1,22 +1,13 @@
 // Dependence
 import 'dotenv/config';
 
-// Node imports
-import fs from 'node:fs';
-
-// Packages imports
-import { Transaction } from '@mysten/sui/transactions';
-import inquirer from 'inquirer';
-
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
-import { getAddress, getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../../utils/waterCooler.js";
-import { getObjectId } from "../../utils/getObjectId.js";
-import { getObjectIdArray } from "../../utils/getObjectIdArray.js";
-import { WATER_COOLER, WATER_COOLER_ADMIN, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../../constants.js";
+import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
+import { WATER_COOLER_ID } from "../../constants.js";
 
 
 export default async () => {
-  console.log("Your Water Cooler ID is: ");
+  const waterCoolerId = getNestedObjectIdConfig(config.network, WATER_COOLER_ID);
+  console.log("Your Water Cooler ID is:", waterCoolerId);
 }

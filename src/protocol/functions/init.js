@@ -11,17 +11,17 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId, delay } from "../../utils/waterCooler.js";
-import { getObjectId } from "../../utils/getObjectId.js";
+import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
 import { WATER_COOLER, WATER_COOLER_ADMIN } from "../../constants.js";
 
 
 export default async () => {
   console.log("Initiate Water Cooler");
 
-  const waterCoolerObjectId = await getObjectId(WATER_COOLER);
+  const waterCoolerObjectId = await getObjectIdFile(WATER_COOLER);
   console.log("objectId", waterCoolerObjectId);
 
-  const waterCoolerAdminObjectId = await getObjectId(WATER_COOLER_ADMIN);
+  const waterCoolerAdminObjectId = await getObjectIdFile(WATER_COOLER_ADMIN);
   console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
 
   const keypair = getKeypair();

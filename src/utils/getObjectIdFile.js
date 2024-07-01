@@ -8,7 +8,7 @@ const dataPath = '.outputs/water_cooler.json';
 // This is used to read the data into the file as the import is done from the current file location directory
 const waterCoolerData = './../../.outputs/water_cooler.json';
 
-export const getObjectId = (type) => {
+export const getObjectIdFile = (type) => {
   return new Promise(async (resolve, reject) => {
     const packageId = getPacakgeId();
 
@@ -33,11 +33,11 @@ export const getObjectId = (type) => {
         resolve(object?.objectId);
       } else {
         // console.log("The project has not been deployed yet.");
-        reject("No Water Cooler was found");
+        reject("Error while retriving ID from json file");
       }
 
     } catch (error) {
-      reject("No Water Cooler was found");
+      reject("Error while retriving ID from json file");
     }
   });
 };

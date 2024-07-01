@@ -15,3 +15,16 @@ export const updateConfig = (key, value) => {
     res({success: true});
   });
 }
+
+export const updateNestedConfig = (key1, key2, value) => {
+  return new Promise(async (res, rej) => {
+    let updated_config = config;
+    updated_config[key1][key2] = value;
+
+    const writeStream = fs.createWriteStream("./config.json", { flags: 'w' });
+    writeStream.write(JSON.stringify(updated_config, null, 4));
+    writeStream.end();
+
+    res({success: true});
+  });
+}

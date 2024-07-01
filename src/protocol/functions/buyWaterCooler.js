@@ -12,7 +12,16 @@ import inquirer from 'inquirer';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
 import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../../utils/waterCooler.js";
+import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
+import { updateNestedConfig } from "../../utils/configUtils.js";
 import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
+import { 
+  WATER_COOLER, WATER_COOLER_ID, WATER_COOLER_ADMIN, WATER_COOLER_ADMIN_ID,
+  REGISTRY, REGISTRY_ID, REGISTRY_ADMIN, REGISTRY_ADMIN_CAP_ID,
+  MINT_SETTINGS, MINT_SETTING_ID, MINT_WAREHOUSE, MINT_WAREHOUSE_ID, MINT_ADMIN, MINT_ADMIN_CAP_ID,
+  COLLECTION, COLLECTION_ID,
+  DIGEST, DIGEST_BUY
+ } from "../../constants.js";
 
 
 // Buy a Water Cooler from the Factory in the Water Cooler Protocol
@@ -66,7 +75,7 @@ export default async () => {
     });
 
     // Wait for the transaction to be finalised
-    // await delay(5000); // Wait 5 seconds
+    await delay(3000); // Wait 5 seconds
 
     const objectChange = await client.getTransactionBlock({
       digest: result?.digest,
@@ -79,6 +88,38 @@ export default async () => {
         showBalanceChanges: false,
       },
     });
+
+    await updateNestedConfig(DIGEST, DIGEST_BUY, result?.digest);
+
+    // console.log("result?.digest", result?.digest);
+    
+    const water_cooler_id = await getObjectIdJson(WATER_COOLER, objectChange);
+    const water_cooler_admin_cap_id = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
+    const registry_id = await getObjectIdJson(REGISTRY, objectChange);
+    const registry_admin_cap_id = await getObjectIdJson(REGISTRY_ADMIN, objectChange);
+    const mint_setting_id = await getObjectIdJson(MINT_SETTINGS, objectChange);
+    const mint_warehouse_id = await getObjectIdJson(MINT_WAREHOUSE, objectChange);
+    const mint_admin_id = await getObjectIdJson(MINT_ADMIN, objectChange);
+    const collection_id = await getObjectIdJson(COLLECTION, objectChange);
+
+    // console.log("water_cooler_id", water_cooler_id);
+    // console.log("water_cooler_admin_cap_id", water_cooler_admin_cap_id);
+    // console.log("registry_id", registry_id);
+    // console.log("registry_admin_cap_id", registry_admin_cap_id);
+    // console.log("mint_setting_id", mint_setting_id);
+    // console.log("mint_warehouse_id", mint_warehouse_id);
+    // console.log("mint_admin_id", mint_admin_id);
+    // console.log("collection_id", collection_id);
+
+    await updateNestedConfig(config.network, WATER_COOLER_ID, water_cooler_id);
+    await updateNestedConfig(config.network, WATER_COOLER_ADMIN_ID, water_cooler_admin_cap_id);
+    await updateNestedConfig(config.network, REGISTRY_ID, registry_id);
+    await updateNestedConfig(config.network, REGISTRY_ADMIN_CAP_ID, registry_admin_cap_id);
+    await updateNestedConfig(config.network, MINT_SETTING_ID, mint_setting_id);
+    await updateNestedConfig(config.network, MINT_WAREHOUSE_ID, mint_warehouse_id);
+    await updateNestedConfig(config.network, MINT_ADMIN_CAP_ID, mint_admin_id);
+    await updateNestedConfig(config.network, COLLECTION_ID, collection_id);
+
 
     const folderName = '.outputs';
 

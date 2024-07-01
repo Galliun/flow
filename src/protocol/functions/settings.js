@@ -8,15 +8,15 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
-import { getObjectId } from "../../utils/getObjectId.js";
+import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
 import { MINT_ADMIN, MINT_SETTINGS } from "../../constants.js";
 
 
 export default async (options) => {
 
-    const mintAdminCapObjectId = await getObjectId(MINT_ADMIN);
+    const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
     console.log("mintAdminCapObjectId", mintAdminCapObjectId);
-    const mintSettingsObjectId = await getObjectId(MINT_SETTINGS);
+    const mintSettingsObjectId = await getObjectIdFile(MINT_SETTINGS);
     console.log("mintSettingsObjectId", mintSettingsObjectId);
 
     if (options.amount) {

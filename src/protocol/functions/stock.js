@@ -11,7 +11,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
-import { getObjectId } from "../../utils/getObjectId.js";
+import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
 import { getObjectIdArray } from "../../utils/getObjectIdArray.js";
 import { WATER_COOLER, MIZU_NFT, MINT_ADMIN, MINT_WAREHOUSE } from "../../constants.js";
 
@@ -23,11 +23,11 @@ export default async () => {
   const mizuNFTIdArray = await getObjectIdArray(MIZU_NFT);
   // console.log("mizuNFTIdArray", mizuNFTIdArray);
 
-  const waterCoolerObjectId = await getObjectId(WATER_COOLER);
+  const waterCoolerObjectId = await getObjectIdFile(WATER_COOLER);
   // console.log("waterCoolerObjectId", waterCoolerObjectId);
-  const mintAdminCapObjectId = await getObjectId(MINT_ADMIN);
+  const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
   // console.log("mintAdminCapObjectId", mintAdminCapObjectId);
-  const warehouseObjectId = await getObjectId(MINT_WAREHOUSE);
+  const warehouseObjectId = await getObjectIdFile(MINT_WAREHOUSE);
   // console.log("warehouseObjectId", warehouseObjectId);
 
   const keypair = getKeypair();
