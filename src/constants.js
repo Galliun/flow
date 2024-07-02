@@ -6,6 +6,7 @@ export const TESTNET = "testnet";
 // ==== Digest ====
 export const DIGEST = "digest";
 export const DIGEST_BUY = "buy";
+export const DIGEST_INIT = "init";
 
 // ==== Sui object types ====
 export const WATER_COOLER = "::water_cooler::WaterCooler";

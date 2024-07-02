@@ -8,6 +8,25 @@ const dataPath = '.outputs/initialization.json';
 // This is used to read the data into the file as the import is done from the current file location directory
 const initializationData = '../.outputs/initialization.json';
 
+export const getObjectIdArrayFromObject = (type, jsonContent) => {
+  return new Promise(async (resolve, reject) => {
+    const packageId = getPacakgeId();
+
+    // find the object that has the type "published"
+    function objectType(object) {
+      return object.objectType == `${packageId}${type}`;
+    };
+
+    try {
+        const objects = jsonContent?.objectChanges?.filter(objectType);
+        const objectIds = objects.map(object => object.objectId);
+        resolve(objectIds);
+    } catch (error) {
+      reject("The Water Cooler has not been initialized");
+    }
+  });
+};
+
 export const getObjectIdArray = (type) => {
   return new Promise(async (resolve, reject) => {
     const packageId = getPacakgeId();
@@ -28,15 +47,11 @@ export const getObjectIdArray = (type) => {
         // Search objectChange to find all objects of a specific type
         const objects = jsonContent?.objectChanges?.filter(objectType);
 
-        // let objectIds = [];
-
         const objectIds = objects.map(object => object.objectId);
 
-      
         // Return package ID
         resolve(objectIds);
       } else {
-        // console.log("The project has not been deployed yet.");
         reject("The Water Cooler has not been initialized");
       }
 

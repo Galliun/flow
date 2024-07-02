@@ -17,14 +17,14 @@
     "testnet": {
         "packageId": "0xcf70c7386a32e9609897df5c51afca01e168afd0d11c472af63000a9c910bd51",
         "coolerFactoryId": "0xae2e92833de12064ce227a49e91f0dd0b4fa5cddebd7ef656c76ec75c512f433",
-        "waterCoolerId": "0xc20a189cabf101f9ab668c92655584eb21e0ced317341e3e3050e88347335aef",
-        "waterCoolerAdminCapId": "0x23a9408273c6648fe16d78a605ca037eed251b894cae78354db3e05a716cf86b",
-        "mintAdminCapId": "0xa14aaeb66f424345f9d2cda2a50b9475cb27cf8ff74fd054923e2d2444890c63",
-        "collectionId": "0x02172732f352558fa86bce712ce2e7b0221d715cf36aac338b355bbaa1f369fb",
-        "mintSettingId": "0x09269abe45477d950817075f0a8e6eeca04ae348d7462fdcac54573ff5f5ec9a",
-        "registryId": "0xfa5637e0d8c7c2fbc6293b8a3efe69279f0da61985ca270515ea2c0d23952cfd",
-        "registryAdminCapId": "0xc9f8babc194a22d8e11fac354e7b9f6ac48082ef63f083a9a50406bbdce9d36e",
-        "warehouseId": "0x36037d5deb73a83d40c470ece54258fba13027da3d6486a3a4fe14c2514097b7",
+        "waterCoolerId": "",
+        "waterCoolerAdminCapId": "",
+        "mintAdminCapId": "",
+        "collectionId": "",
+        "mintSettingId": "",
+        "registryId": "",
+        "registryAdminCapId": "",
+        "warehouseId": "",
         "mizuNFTIDs": []
     },
     "mainnet": {
@@ -53,10 +53,10 @@
         "phase": 3
     },
     "digest": {
-        "buy": "Gkzmd19LkTZLZk6zYSyRRxnsw4AgA2L9DmhcRdDfY3df",
+        "buy": "",
+        "init": "",
         "setPrice": "",
         "setPhase": "",
-        "setStatus": "",
-        "initiate_cooler": ""
+        "setStatus": ""
     }
 }

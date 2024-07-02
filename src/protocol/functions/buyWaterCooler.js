@@ -11,10 +11,11 @@ import inquirer from 'inquirer';
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails, delay } from "../../utils/waterCooler.js";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler.js";
 import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
 import { updateNestedConfig } from "../../utils/configUtils.js";
 import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
+import init from "./init.js";
 import { 
   WATER_COOLER, WATER_COOLER_ID, WATER_COOLER_ADMIN, WATER_COOLER_ADMIN_ID,
   REGISTRY, REGISTRY_ID, REGISTRY_ADMIN, REGISTRY_ADMIN_CAP_ID,
@@ -69,29 +70,16 @@ export default async () => {
       ]
     });
   
-    const result = await client.signAndExecuteTransaction({
+    const objectChange = await client.signAndExecuteTransaction({
       signer: keypair,
       transaction: tx,
+      options: { showObjectChanges: true }
     });
 
-    // Wait for the transaction to be finalised
-    await delay(3000); // Wait 5 seconds
 
-    const objectChange = await client.getTransactionBlock({
-      digest: result?.digest,
-      // only fetch the effects field
-      options: {
-        showEffects: false,
-        showInput: false,
-        showEvents: false,
-        showObjectChanges: true,
-        showBalanceChanges: false,
-      },
-    });
+    await updateNestedConfig(DIGEST, DIGEST_BUY, objectChange?.digest);
 
-    await updateNestedConfig(DIGEST, DIGEST_BUY, result?.digest);
-
-    // console.log("result?.digest", result?.digest);
+    // console.log("objectChange?.digest", objectChange?.digest);
     
     const water_cooler_id = await getObjectIdJson(WATER_COOLER, objectChange);
     const water_cooler_admin_cap_id = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
@@ -116,9 +104,9 @@ export default async () => {
     await updateNestedConfig(config.network, REGISTRY_ID, registry_id);
     await updateNestedConfig(config.network, REGISTRY_ADMIN_CAP_ID, registry_admin_cap_id);
     await updateNestedConfig(config.network, MINT_SETTING_ID, mint_setting_id);
-    await updateNestedConfig(config.network, MINT_WAREHOUSE_ID, mint_warehouse_id);
-    await updateNestedConfig(config.network, MINT_ADMIN_CAP_ID, mint_admin_id);
     await updateNestedConfig(config.network, COLLECTION_ID, collection_id);
+    await updateNestedConfig(config.network, MINT_ADMIN_CAP_ID, mint_admin_id);
+    await updateNestedConfig(config.network, MINT_WAREHOUSE_ID, mint_warehouse_id);
 
 
     const folderName = '.outputs';
@@ -131,11 +119,15 @@ export default async () => {
       console.error(err);
     }
   
-    const writeStream = fs.createWriteStream(".outputs/water_cooler.json", { flags: 'w' });
-      writeStream.write(JSON.stringify(objectChange, null, 4));
-      writeStream.end();
-  
-    console.log("Your Water Cooler has arrived.");
+    const writeStream = await fs.createWriteStream(".outputs/water_cooler.json", { flags: 'w' });
+    await writeStream.write(JSON.stringify(objectChange, null, 4));
+    await writeStream.end();
+
+    
+      console.log("Your Water Cooler has arrived.");
+
+      // init();
+
 
   } else {
     console.log(`Buy order canceled.`);

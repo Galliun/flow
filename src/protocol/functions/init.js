@@ -10,19 +10,20 @@ import { Transaction } from '@mysten/sui/transactions';
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getPacakgeId, delay } from "../../utils/waterCooler.js";
-import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
-import { WATER_COOLER, WATER_COOLER_ADMIN } from "../../constants.js";
+import { getPacakgeId } from "../../utils/waterCooler.js";
+import { updateNestedConfig, getNestedConfig } from "../../utils/configUtils.js";
+import { getObjectIdArrayFromObject } from "../../utils/getObjectIdArray.js";
+import { 
+  WATER_COOLER_ID, WATER_COOLER_ADMIN_ID,
+  REGISTRY_ID,
+  COLLECTION_ID,
+  DIGEST, DIGEST_INIT,
+  MIZU_NFT, MIZU_NFT_IDS
+ } from "../../constants.js";
 
 
 export default async () => {
   console.log("Initiate Water Cooler");
-
-  const waterCoolerObjectId = await getObjectIdFile(WATER_COOLER);
-  console.log("objectId", waterCoolerObjectId);
-
-  const waterCoolerAdminObjectId = await getObjectIdFile(WATER_COOLER_ADMIN);
-  console.log("waterCoolerAdminObjectId", waterCoolerAdminObjectId);
 
   const keypair = getKeypair();
   const client = getClient();
@@ -35,32 +36,22 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::water_cooler::initialize_water_cooler`,
     arguments: [
-      tx.object(waterCoolerAdminObjectId),
-      tx.object(waterCoolerObjectId)
+      tx.object(getNestedConfig(config.network, WATER_COOLER_ADMIN_ID)),
+      tx.object(getNestedConfig(config.network, WATER_COOLER_ID)),
+      tx.object(getNestedConfig(config.network, REGISTRY_ID)),
+      tx.object(getNestedConfig(config.network, COLLECTION_ID)),
     ]
   });
 
-  const result = await client.signAndExecuteTransaction({
+  const objectChange = await client.signAndExecuteTransaction({
     signer: keypair,
     transaction: tx,
+    options: { showObjectChanges: true },
   });
 
-  // console.log("result", result);
-
-  // Wait for the transaction to be finalised
-  await delay(5000); // Wait 5 seconds
-
-  const objectChange = await client.getTransactionBlock({
-    digest: result?.digest,
-    // only fetch the effects field
-    options: {
-      showEffects: false,
-      showInput: false,
-      showEvents: false,
-      showObjectChanges: true,
-      showBalanceChanges: false,
-    },
-  });
+  await updateNestedConfig(DIGEST, DIGEST_INIT, objectChange?.digest);
+  const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
+  await updateNestedConfig(config.network, MIZU_NFT_IDS, mizuNFTIdArray);
 
   const folderName = '.outputs';
 
@@ -72,9 +63,9 @@ export default async () => {
       console.error(err);
     }
 
-  const writeStream = fs.createWriteStream("./.outputs/initialization.json", { flags: 'w' });
-    writeStream.write(JSON.stringify(objectChange, null, 4));
-    writeStream.end();
+  const writeStream = await fs.createWriteStream("./.outputs/initialization.json", { flags: 'w' });
+  await writeStream.write(JSON.stringify(objectChange, null, 4));
+  await writeStream.end();
 
   console.log("Your Water Cooler has been initiated.");
 }
