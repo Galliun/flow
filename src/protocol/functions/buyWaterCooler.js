@@ -13,6 +13,7 @@ import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
 import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler.js";
 import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
+import writeFile from "../../utils/writeFile.js";
 import { updateNestedConfig } from "../../utils/configUtils.js";
 import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
 import init from "./init.js";
@@ -90,15 +91,6 @@ export default async () => {
     const mint_admin_id = await getObjectIdJson(MINT_ADMIN, objectChange);
     const collection_id = await getObjectIdJson(COLLECTION, objectChange);
 
-    // console.log("water_cooler_id", water_cooler_id);
-    // console.log("water_cooler_admin_cap_id", water_cooler_admin_cap_id);
-    // console.log("registry_id", registry_id);
-    // console.log("registry_admin_cap_id", registry_admin_cap_id);
-    // console.log("mint_setting_id", mint_setting_id);
-    // console.log("mint_warehouse_id", mint_warehouse_id);
-    // console.log("mint_admin_id", mint_admin_id);
-    // console.log("collection_id", collection_id);
-
     await updateNestedConfig(config.network, WATER_COOLER_ID, water_cooler_id);
     await updateNestedConfig(config.network, WATER_COOLER_ADMIN_ID, water_cooler_admin_cap_id);
     await updateNestedConfig(config.network, REGISTRY_ID, registry_id);
@@ -109,22 +101,10 @@ export default async () => {
     await updateNestedConfig(config.network, MINT_WAREHOUSE_ID, mint_warehouse_id);
 
 
-    const folderName = '.outputs';
 
-    try {
-      if (!fs.existsSync(folderName)) {
-        fs.mkdirSync(folderName);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  
-    const writeStream = await fs.createWriteStream(".outputs/water_cooler.json", { flags: 'w' });
-    await writeStream.write(JSON.stringify(objectChange, null, 4));
-    await writeStream.end();
+    await writeFile("water_cooler", objectChange);
 
-    
-      console.log("Your Water Cooler has arrived.");
+    console.log("Your Water Cooler has arrived.");
 
       // init();
 

@@ -11,6 +11,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
+import writeFile from "../../utils/writeFile.js";
 import { updateNestedConfig, getNestedConfig } from "../../utils/configUtils.js";
 import { getObjectIdArrayFromObject } from "../../utils/getObjectIdArray.js";
 import { 
@@ -53,19 +54,7 @@ export default async () => {
   const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
   await updateNestedConfig(config.network, MIZU_NFT_IDS, mizuNFTIdArray);
 
-  const folderName = '.outputs';
-
-    try {
-      if (!fs.existsSync(folderName)) {
-        fs.mkdirSync(folderName);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-
-  const writeStream = await fs.createWriteStream("./.outputs/initialization.json", { flags: 'w' });
-  await writeStream.write(JSON.stringify(objectChange, null, 4));
-  await writeStream.end();
+  await writeFile("initialization", objectChange);
 
   console.log("Your Water Cooler has been initiated.");
 }

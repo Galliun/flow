@@ -9,14 +9,17 @@ import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
 import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
-import { MINT_ADMIN, MINT_SETTINGS } from "../../constants.js";
+import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
+import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID } from "../../constants.js";
 
 
 export default async (options) => {
 
-    const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
+    // const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
+    const mintAdminCapObjectId = await getNestedObjectIdConfig(config.network, MINT_ADMIN_CAP_ID);
     console.log("mintAdminCapObjectId", mintAdminCapObjectId);
-    const mintSettingsObjectId = await getObjectIdFile(MINT_SETTINGS);
+    // const mintSettingsObjectId = await getObjectIdFile(MINT_SETTINGS);
+    const mintSettingsObjectId = await getNestedObjectIdConfig(config.network, MINT_SETTING_ID);
     console.log("mintSettingsObjectId", mintSettingsObjectId);
 
     if (options.amount) {

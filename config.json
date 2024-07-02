@@ -55,6 +55,7 @@
     "digest": {
         "buy": "",
         "init": "",
+        "stock": "",
         "setPrice": "",
         "setPhase": "",
         "setStatus": ""

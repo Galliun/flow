@@ -7,6 +7,7 @@ export const TESTNET = "testnet";
 export const DIGEST = "digest";
 export const DIGEST_BUY = "buy";
 export const DIGEST_INIT = "init";
+export const DIGEST_STOCK = "stock";
 
 // ==== Sui object types ====
 export const WATER_COOLER = "::water_cooler::WaterCooler";
@@ -29,7 +30,6 @@ export const WATER_COOLER_ADMIN_ID = "waterCoolerAdminCapId";
 export const COLLECTION_ID = "collectionId";
 export const MINT_SETTING_ID = "mintSettingId";
 export const MINT_WAREHOUSE_ID = "warehouseId";
-export const MINT_ADMIN_ID = "mintAdminId";
 export const MINT_ADMIN_CAP_ID = "mintAdminCapId";
 export const REGISTRY_ID = "registryId";
 export const REGISTRY_ADMIN_CAP_ID = "registryAdminCapId";
