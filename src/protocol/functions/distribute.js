@@ -11,81 +11,65 @@ import wl from "../../../assets/wl.json" assert { type: "json" };
 
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
-import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
+import readTickets from "../../utils/readTickets.js";
+import { readFile } from "../../utils/fileUtils.js";
 import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
-import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID } from "../../constants.js";
+import { MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID, BUY } from "../../constants.js";
+
+const distributeTickets = async (ticketType) => {
+
+    console.log("Starting distributuion...");
+
+    const keypair = getKeypair();
+    const client = getClient();
+    const packageId = getPacakgeId();
+    const buyObject = await readFile(`${config.network}_${BUY}`);
+    const ticketListObject = await readTickets(ticketType);
+
+    for (let i = 0; i < ticketListObject.ticketList.length; i++) {
+        const ticketObject = ticketListObject.ticketList[i];
+        
+        for (let j = 0; j < ticketObject.amount; j++) {
+
+            const address = ticketObject.address;
+
+            const tx = new Transaction();
+
+            tx.moveCall({
+                target: `${packageId}::mint::create_${ticketType}_ticket`,
+                arguments: [
+                    tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+                    tx.object(buyObject[MINT_WAREHOUSE_ID]),
+                    tx.object(address)
+                ],
+            });
+    
+            const objectChanges = await client.signAndExecuteTransaction({
+                signer: keypair,
+                transaction: tx,
+                options: { showObjectChanges: true }
+            });
+    
+            if (!objectChanges) {
+                console.log("Error: objectChanges is null or undefined");
+                process.exit(1);
+            }
+
+            console.log("Ticket sent to:", address);
+        }
+    }
+    console.log(`All tickets have been distributed`);
+}
 
 
 export default async (options) => {
-
-    // // const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
-    // const mintAdminCapObjectId = await getNestedObjectIdConfig(config.network, MINT_ADMIN_CAP_ID);
-    // console.log("mintAdminCapObjectId", mintAdminCapObjectId);
-    // // const mintSettingsObjectId = await getObjectIdFile(MINT_SETTINGS);
-    // const mintSettingsObjectId = await getNestedObjectIdConfig(config.network, MINT_SETTING_ID);
-    // console.log("mintSettingsObjectId", mintSettingsObjectId);
-
     if (options.og) {
-        console.log(`distribute OG tickets: ${options.og}`);
-        // logic to change the NFT mint price ...
-
-    //     const amount = parseInt(options.amount);
-    
-    //     const keypair = getKeypair();
-    //     const client = getClient();
-    
-    //     const packageId = getPacakgeId();
-    //     const tx = new Transaction();
-    
-    //     tx.setGasBudget(config.gasBudgetAmount);
-    
-    //     tx.moveCall({
-    //         target: `${packageId}::mint::set_mint_price`,
-    //         arguments: [
-    //         tx.object(mintAdminCapObjectId),
-    //         tx.object(mintSettingsObjectId),   
-    //         tx.pure.u64(amount),
-    //         ]
-    //     });
-    
-    //     const result = await client.signAndExecuteTransaction({
-    //         signer: keypair,
-    //         transaction: tx,
-    //     });
-    
-    //     console.log("Price Transaction result:", result); // Log transaction result
+        console.log(`distribute OG tickets`);
+        distributeTickets("og");
     }
     
     if (options.wl) {
-        console.log(`distribute WL tickets: ${options.wl}`);
-        
-        // const phase = parseInt(options.phase);
-
-        // console.log("Phase:", phase);
-    
-        // const keypair = getKeypair();
-        // const client = getClient();
-    
-        // const packageId = getPacakgeId();
-        // const tx = new Transaction();
-    
-        // tx.setGasBudget(config.gasBudgetAmount);
-    
-        // tx.moveCall({
-        //     target: `${packageId}::mint::set_mint_phase`,
-        //     arguments: [
-        //     tx.object(mintAdminCapObjectId),
-        //     tx.object(mintSettingsObjectId),   
-        //     tx.pure.u8(phase),
-        //     ]
-        // });
-    
-        // const result = await client.signAndExecuteTransaction({
-        //     signer: keypair,
-        //     transaction: tx,
-        // });
-    
-        // console.log("Transaction result:", result); // Log transaction result
+        console.log(`distribute White List tickets`);
+        distributeTickets("wl");
     }
-    
 }

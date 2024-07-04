@@ -1,6 +1,8 @@
 // Node imports
 import fs from 'node:fs';
 
+import config from "../../config.json" assert { type: "json" };
+
 export const writeFile = (fileName, object) => {
   return new Promise(async (resolve, reject) => {
     const folderName = '.outputs';
@@ -38,17 +40,32 @@ export const readFile = (fileName) => {
 
       if (exists) {
         // Import the json file as an object
-        const jsonContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+        try {
+          const jsonContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
 
-        // Return json file as object
-        resolve(jsonContent);
+          // Return json file as object
+          resolve(jsonContent);
+        } catch (error) {
+          if (fileName == `${config.network}_buy`) {
+            console.log("You haven't bought a Water cooler yet");
+          }
+          
+          process.exit(1);
+        }
+        
       } else {
         // console.log("The project has not been deployed yet.");
-        reject("Error while retriving ID from json file");
+        if (fileName == `${config.network}_buy`) {
+          console.log("You haven't bought a Water cooler yet");
+        }
+        
+        process.exit(1);
+      
+        reject("Error 1 while retriving ID from json file");
       }
 
     } catch (error) {
-      reject("Error while retriving ID from json file");
+      reject("Error 2 while retriving ID from json file");
     }
   });
 };

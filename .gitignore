@@ -1,6 +1,8 @@
 node_modules
 assets/attributes/*
 assets/images/*
+assets/og_test.json
+assets/wl_test.json
 .env
 .temp
 .DS_Store
