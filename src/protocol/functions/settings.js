@@ -8,23 +8,18 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
-import { getObjectIdFile } from "../../utils/getObjectIdFile.js";
-import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
-import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID } from "../../constants.js";
+import { readFile } from "../../utils/fileUtils.js";
+import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID, BUY } from "../../constants.js";
 
 
 export default async (options) => {
+    const buyObject = await readFile(`${config.network}_${BUY}`);
 
-    // const mintAdminCapObjectId = await getObjectIdFile(MINT_ADMIN);
-    const mintAdminCapObjectId = await getNestedObjectIdConfig(config.network, MINT_ADMIN_CAP_ID);
-    console.log("mintAdminCapObjectId", mintAdminCapObjectId);
-    // const mintSettingsObjectId = await getObjectIdFile(MINT_SETTINGS);
-    const mintSettingsObjectId = await getNestedObjectIdConfig(config.network, MINT_SETTING_ID);
-    console.log("mintSettingsObjectId", mintSettingsObjectId);
+    const mintAdminCapObjectId = buyObject[MINT_ADMIN_CAP_ID];
+    const mintSettingsObjectId = buyObject[MINT_SETTING_ID]
 
     if (options.amount) {
         console.log(`Changing mint price to: ${options.amount}`);
-        // logic to change the NFT mint price ...
 
         const amount = parseInt(options.amount);
     
@@ -39,18 +34,16 @@ export default async (options) => {
         tx.moveCall({
             target: `${packageId}::mint::set_mint_price`,
             arguments: [
-            tx.object(mintAdminCapObjectId),
-            tx.object(mintSettingsObjectId),   
+            tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+            tx.object(buyObject[MINT_SETTING_ID]),   
             tx.pure.u64(amount),
             ]
         });
     
-        const result = await client.signAndExecuteTransaction({
+        await client.signAndExecuteTransaction({
             signer: keypair,
             transaction: tx,
         });
-    
-        console.log("Price Transaction result:", result); // Log transaction result
     }
     
     if (options.phase) {
@@ -58,7 +51,6 @@ export default async (options) => {
         
         const phase = parseInt(options.phase);
 
-        console.log("Phase:", phase);
     
         const keypair = getKeypair();
         const client = getClient();
@@ -77,20 +69,17 @@ export default async (options) => {
             ]
         });
     
-        const result = await client.signAndExecuteTransaction({
+        await client.signAndExecuteTransaction({
             signer: keypair,
             transaction: tx,
         });
-    
-        console.log("Transaction result:", result); // Log transaction result
     }
     
     if (options.status) {
         console.log(`Changing mint status to: ${options.status}`);
-        
+
         const status = parseInt(options.status);
 
-        console.log("Status:", status);
     
         const keypair = getKeypair();
         const client = getClient();
@@ -109,11 +98,9 @@ export default async (options) => {
             ]
         });
     
-        const result = await client.signAndExecuteTransaction({
+        await client.signAndExecuteTransaction({
             signer: keypair,
             transaction: tx,
         });
-    
-        console.log("Status transaction result:", result); // Log transaction result
     }
 }

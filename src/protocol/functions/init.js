@@ -11,36 +11,38 @@ import { Transaction } from '@mysten/sui/transactions';
 import config from "../../../config.json" assert { type: "json" };
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
-import writeFile from "../../utils/writeFile.js";
-import { updateNestedConfig, getNestedConfig } from "../../utils/configUtils.js";
+import { writeFile, readFile } from "../../utils/fileUtils.js";
 import { getObjectIdArrayFromObject } from "../../utils/getObjectIdArray.js";
 import { 
-  WATER_COOLER_ID, WATER_COOLER_ADMIN_ID,
+  WATER_COOLER_ID,
+  WATER_COOLER_ADMIN_ID,
   REGISTRY_ID,
   COLLECTION_ID,
-  DIGEST, DIGEST_INIT,
-  MIZU_NFT, MIZU_NFT_IDS
+  DIGEST,
+  INIT,
+  BUY,
+  MIZU_NFT,
+  MIZU_NFT_IDS
  } from "../../constants.js";
-
 
 export default async () => {
   console.log("Initiate Water Cooler");
 
+  const buyObject = await readFile(`${config.network}_${BUY}`);
   const keypair = getKeypair();
   const client = getClient();
-
   const packageId = getPacakgeId();
   const tx = new Transaction();
 
   tx.setGasBudget(config.gasBudgetAmount);
-
+  
   tx.moveCall({
     target: `${packageId}::water_cooler::initialize_water_cooler`,
     arguments: [
-      tx.object(getNestedConfig(config.network, WATER_COOLER_ADMIN_ID)),
-      tx.object(getNestedConfig(config.network, WATER_COOLER_ID)),
-      tx.object(getNestedConfig(config.network, REGISTRY_ID)),
-      tx.object(getNestedConfig(config.network, COLLECTION_ID)),
+      tx.object(buyObject[WATER_COOLER_ADMIN_ID]),
+      tx.object(buyObject[WATER_COOLER_ID]),
+      tx.object(buyObject[REGISTRY_ID]),
+      tx.object(buyObject[COLLECTION_ID]),
     ]
   });
 
@@ -50,11 +52,14 @@ export default async () => {
     options: { showObjectChanges: true },
   });
 
-  await updateNestedConfig(DIGEST, DIGEST_INIT, objectChange?.digest);
-  const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
-  await updateNestedConfig(config.network, MIZU_NFT_IDS, mizuNFTIdArray);
+  let initObject = {};
 
-  await writeFile("initialization", objectChange);
+  const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
+
+  initObject[MIZU_NFT_IDS] = mizuNFTIdArray;
+  initObject[DIGEST] = objectChange?.digest;
+
+  await writeFile(`${config.network}_${INIT}`, initObject);
 
   console.log("Your Water Cooler has been initiated.");
 }

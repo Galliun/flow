@@ -6,10 +6,15 @@ import { Command } from 'commander';
 import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig.js';
 import { balance, faucet, address } from './helpers/sui.js';
 import { 
-  coolerPrice, buyWaterCooler,
-  init, mint, settings,
-  stock, waterCoolerId,
-  reveal, distribute
+  coolerPrice,
+  buyWaterCooler,
+  init,
+  settings,
+  stock,
+  waterCoolerId,
+  reveal,
+  distribute,
+  orderWaterCooler
 } from './protocol/index.js';
 
 const program = new Command();
@@ -44,7 +49,11 @@ program.command('price')
   .description('Get Water Cooler price from the Cooler factory')
   .action(coolerPrice);
 
-program.command('buy')
+// program.command('order')
+//   .description('Order Water cooler and set it up in one flow')
+//   .action(orderWaterCooler);
+
+  program.command('buy')
   .description('Buy a Water Cooler from the Cooler factory')
   .action(buyWaterCooler);
 
@@ -59,10 +68,6 @@ program.command('init')
 program.command('stock')
   .description('Stock NFTs in Water Cooler warehouse in preperation for mint')
   .action(stock);
-
-program.command('mint')
-  .description('Mint NFT from deployed Water Cooler')
-  .action(mint);
 
   program.command('reveal')
   .description('Reveal the NFT images and attributes')

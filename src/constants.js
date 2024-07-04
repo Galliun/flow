@@ -5,9 +5,11 @@ export const TESTNET = "testnet";
 
 // ==== Digest ====
 export const DIGEST = "digest";
-export const DIGEST_BUY = "buy";
-export const DIGEST_INIT = "init";
-export const DIGEST_STOCK = "stock";
+export const BUY = "buy";
+export const INIT = "init";
+export const STOCK = "stock";
+export const DISTRUBUTE = "distribute";
+export const REVEAL = "reveal";
 
 // ==== Sui object types ====
 export const WATER_COOLER = "::water_cooler::WaterCooler";

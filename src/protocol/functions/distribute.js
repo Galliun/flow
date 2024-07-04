@@ -6,6 +6,9 @@ import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
+import og from "../../../assets/og.json" assert { type: "json" };
+import wl from "../../../assets/wl.json" assert { type: "json" };
+
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
 import { getObjectIdFile } from "../../utils/getObjectIdFile.js";

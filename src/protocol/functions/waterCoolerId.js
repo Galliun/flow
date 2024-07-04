@@ -3,11 +3,10 @@ import 'dotenv/config';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
-import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
-import { WATER_COOLER_ID } from "../../constants.js";
-
+import { readFile } from "../../utils/fileUtils.js";
+import { WATER_COOLER_ID, BUY } from "../../constants.js";
 
 export default async () => {
-  const waterCoolerId = getNestedObjectIdConfig(config.network, WATER_COOLER_ID);
-  console.log("Your Water Cooler ID is:", waterCoolerId);
+  const buyObject = await readFile(`${config.network}_${BUY}`);
+  console.log("Your Water Cooler ID is:", buyObject[WATER_COOLER_ID]);
 }

@@ -3,61 +3,14 @@
     "network": "testnet",
     "devnet": {
         "packageId": "",
-        "coolerFactoryId": "",
-        "waterCoolerId": "",
-        "waterCoolerAdminCapId": "",
-        "mintAdminCapId": "",
-        "collectionId": "",
-        "mintSettingId": "",
-        "registryId": "",
-        "registryAdminCapId": "",
-        "warehouseId": "",
-        "mizuNFTIDs": []
+        "coolerFactoryId": ""
     },
     "testnet": {
         "packageId": "0x921074a9660f448dd9c42a2dea43918e36a597b7a4f045de171cd0dc37a40feb",
-        "coolerFactoryId": "0x1428021fa2957d0705968cd5442dd9b64600e39b135ce4edd75de0185dd940e8",
-        "waterCoolerId": "0x7d3d7dde1b01fc200182eb462fd8701b1bc992757ebf62cb6d3aa442b17f42ef",
-        "waterCoolerAdminCapId": "0xda3042123053de7dc10d0fa9ebe6b8c65aada7651098009558ce1279c1012a0d",
-        "mintAdminCapId": "0x1cdcf43fecdd73bef422f05c7013b71424b849453ec48f9119c8fa9b92dcf416",
-        "collectionId": "0x0af806c43c6a9ae93f4315d287223b4f60c48711c52f18b472c982a875661a37",
-        "mintSettingId": "0xdcdc525fcdfca5f3ec4ec4155aa31cdba1d28009b2438a3617c0c941e60f1955",
-        "registryId": "0x793ad6e1a1c8e84ab9beb29a5ee6db0983f8360a85fedfbaf06fc5f2dca0458d",
-        "registryAdminCapId": "0xe8732e9b7a40a2122b29d93e15583006236fd4a5ebf069aceaf720b919d64b96",
-        "warehouseId": "0x03182ebe7df395ce22f658b84644c86e96c2c6efd0e20d6dcdda850f9240786c",
-        "mizuNFTIDs": []
+        "coolerFactoryId": "0x1428021fa2957d0705968cd5442dd9b64600e39b135ce4edd75de0185dd940e8"
     },
     "mainnet": {
         "packageId": "",
-        "coolerFactoryId": "",
-        "waterCoolerId": "",
-        "waterCoolerAdminCapId": "",
-        "mintAdminCapId": "",
-        "collectionId": "",
-        "mintSettingId": "",
-        "registryId": "",
-        "registryAdminCapId": "",
-        "warehouseId": "",
-        "mizuNFTIDs": []
-    },
-    "og": {
-        "price": 0,
-        "phase": 1
-    },
-    "wl": {
-        "price": 0,
-        "phase": 2
-    },
-    "public": {
-        "price": 0,
-        "phase": 3
-    },
-    "digest": {
-        "buy": "FABYEBfm1xjUD7n7BisZpk5qNttFok3u429s7P6Xe7hQ",
-        "init": "",
-        "stock": "",
-        "setPrice": "",
-        "setPhase": "",
-        "setStatus": ""
+        "coolerFactoryId": ""
     }
 }
