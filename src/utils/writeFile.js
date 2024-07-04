@@ -11,7 +11,7 @@ export default (fileName, object) => {
       }
     } catch (err) {
       console.error(err);
-      reject({success: true});
+      reject({success: false});
     }
   
     const writeStream = await fs.createWriteStream(`.outputs/${fileName}.json`, { flags: 'w' });

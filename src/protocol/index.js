@@ -4,6 +4,8 @@ import init from "./functions/init.js";
 import stock from "./functions/stock.js";
 import settings from "./functions/settings.js";
 import mint from "./functions/mint.js";
+import reveal from "./functions/reveal.js";
+import distribute from "./functions/distribute.js";
 import waterCoolerId from "./functions/waterCoolerId.js";
 
 export {
@@ -13,5 +15,7 @@ export {
   stock,
   settings,
   mint,
+  reveal,
+  distribute,
   waterCoolerId
 }

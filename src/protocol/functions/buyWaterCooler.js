@@ -47,7 +47,7 @@ export default async () => {
 
     console.log("Shipping... Your Water Cooler will arrive soon");
 
-    const { name, description, supply, treasury, image_url } = CoolerDetails;
+    const { name, description, supply, treasury, image_url, placeholder_image_url } = CoolerDetails;
 
     const keypair = getKeypair();
     const client = getClient();
@@ -64,9 +64,13 @@ export default async () => {
     tx.moveCall({
       target: `${packageId}::cooler_factory::buy_water_cooler`,
       arguments: [
-        tx.object(coolerFactoryId), coin,
-        tx.pure.string(name), tx.pure.string(description),
-        tx.pure.string(image_url), tx.pure.u64(supply),
+        tx.object(coolerFactoryId),
+        coin,
+        tx.pure.string(name),
+        tx.pure.string(description),
+        tx.pure.string(image_url),
+        tx.pure.string(placeholder_image_url),
+        tx.pure.u64(supply),
         tx.pure.address(treasury)
       ]
     });

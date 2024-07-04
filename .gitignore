@@ -1,6 +1,6 @@
 node_modules
-nfts/attributes/*
-nfts/images/*
+assets/attributes/*
+assets/images/*
 .env
 .temp
 .DS_Store

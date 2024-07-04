@@ -43,7 +43,12 @@ export const getWaterCoolerDetails = async () => {
     {
       type: "input",
       name: "image_url",
-      message: `Please provide a URL to an image you would like to use as a cover image.`
+      message: `Please provide a URL to an image you would like to use as your collection a cover image.`
+    },
+    {
+      type: "input",
+      name: "placeholder_image_url",
+      message: `Please provide a URL to an image you would like to use as a placeholder image for your NFTs.`
     },
   ]);
 

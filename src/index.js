@@ -8,7 +8,8 @@ import { balance, faucet, address } from './helpers/sui.js';
 import { 
   coolerPrice, buyWaterCooler,
   init, mint, settings,
-  stock, waterCoolerId 
+  stock, waterCoolerId,
+  reveal, distribute
 } from './protocol/index.js';
 
 const program = new Command();
@@ -63,11 +64,21 @@ program.command('mint')
   .description('Mint NFT from deployed Water Cooler')
   .action(mint);
 
+  program.command('reveal')
+  .description('Reveal the NFT images and attributes')
+  .action(reveal);
+
 program.command('set')
   .description('Change setting on your Water Cooler')
   .option('-a, --amount <amount>', 'Change the NFT mint price. Price must be sent in mist: e.g. 10.5 $SUI = 10.5*10^9')
   .option('-p, --phase <phase>', 'Change the current phase of the Water Cooler. e.g. 0: unset, 1: OG, 2: WL, 3: public mint')
   .option('-s, --status <status>', 'Change the status of the mint. e.g. 0: inactive, 1: active')
   .action(settings);
+
+  program.command('dist')
+  .description('Distribute OG and WL tickers for your NFT mint')
+  .option('-o, --og', 'Distribute OG tickers to address in the assets/og.json')
+  .option('-w, --wl', 'Distribute WL tickers to address in the assets/wl.json')
+  .action(distribute);
   
 program.parse(process.argv);
