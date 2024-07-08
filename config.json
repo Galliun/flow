@@ -6,8 +6,8 @@
         "coolerFactoryId": ""
     },
     "testnet": {
-        "packageId": "0xd6f1577459680cff57a78e8333e854516848e1fdea933da5f173af49e392b947",
-        "coolerFactoryId": "0x5e4e6f932934c06f2d26e0caf12da6ca3745fb62f1f028a4fbcffb89d6521c47"
+        "packageId": "0xa6be7a77ec442c90d2cb415a5ccc149b059440d29e9c45325c989e140ece587c",
+        "coolerFactoryId": "0x1a962c1adf6ce24fc183a1b6c23b8dff0d297bfa14e46b06fc6abc529f620d41"
     },
     "mainnet": {
         "packageId": "",

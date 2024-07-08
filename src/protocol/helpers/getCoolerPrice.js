@@ -18,7 +18,6 @@ export const getCoolerPrice = async () => {
       options: { showContent: true },
     });
 
-    // To Do: fix this any casting
     const response = coolerFactory?.data?.content;
 
     res(response?.fields?.fee);

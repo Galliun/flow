@@ -7,6 +7,7 @@ export const TESTNET = "testnet";
 export const DIGEST = "digest";
 export const BUY = "buy";
 export const INIT = "init";
+export const INIT_OBJECTS = "init_objects";
 export const STOCK = "stock";
 export const DISTRUBUTE = "distribute";
 export const REVEAL = "reveal";

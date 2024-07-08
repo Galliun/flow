@@ -49,6 +49,7 @@ export const getCoolerPrice = async () => {
     //   showEvents: false,
     //   showObjectChanges: true,
     //   showBalanceChanges: false,
+    // showContent: true,
     // },
   });
 

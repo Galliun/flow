@@ -6,14 +6,11 @@ import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
-import og from "../../../assets/og.json" assert { type: "json" };
-import wl from "../../../assets/wl.json" assert { type: "json" };
 
 import { getClient, getKeypair } from "../../utils/suiUtils.js";
 import { getPacakgeId } from "../../utils/waterCooler.js";
 import readTickets from "../../utils/readTickets.js";
 import { readFile } from "../../utils/fileUtils.js";
-import { getNestedObjectIdConfig } from "../../utils/getObjectIdConfig.js";
 import { MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID, BUY } from "../../constants.js";
 
 const distributeTickets = async (ticketType) => {
