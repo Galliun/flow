@@ -49,8 +49,8 @@ export default async () => {
 
     const tx = new Transaction();
 
-    const dataKeys = Object.keys(nftData.atributes);
-    const dataValues = Object.values(nftData.atributes);
+    const dataKeys = Object.keys(nftData.attributes);
+    const dataValues = Object.values(nftData.attributes);
 
     let pureKeys = dataKeys.map(key => tx.pure.string(key));
     let pureValues = dataValues.map(value => tx.pure.string(value));

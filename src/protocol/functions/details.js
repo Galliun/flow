@@ -16,7 +16,7 @@ export default async () => {
   const buyObject = await readFile(`${config.network}_${BUY}`);
   console.log("Package ID:", config[config.network].packageId);
   console.log("Water Cooler ID:", buyObject[WATER_COOLER_ID]);
-  console.log("Transfer policy ID:", config[config.network][TRANSFER_POLICY_ID]);
+  // console.log("Transfer policy ID:", config[config.network][TRANSFER_POLICY_ID]);
   console.log("Mint Warehouse ID:", buyObject[MINT_WAREHOUSE_ID]);
   console.log("Mint Setting ID:", buyObject[MINT_SETTING_ID]);
 }
