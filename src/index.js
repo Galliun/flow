@@ -41,7 +41,7 @@ program.command('faucet')
   .action(faucet);
 
   program.command('address')
-  .description('View current current address')
+  .description('View current address')
   .action(address);
 
 program.command('price')

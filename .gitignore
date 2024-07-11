@@ -3,7 +3,7 @@ assets/attributes/*
 assets/images/*
 assets/og_test.json
 assets/wl_test.json
-assets/metadata.json
+assets/metadata_test.json
 .env
 .temp
 .DS_Store
