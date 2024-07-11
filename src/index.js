@@ -11,10 +11,9 @@ import {
   init,
   settings,
   stock,
-  waterCoolerId,
+  details,
   reveal,
   distribute,
-  orderWaterCooler
 } from './protocol/index.js';
 
 const program = new Command();
@@ -49,10 +48,6 @@ program.command('price')
   .description('Get Water Cooler price from the Cooler factory')
   .action(coolerPrice);
 
-// program.command('order')
-//   .description('Order Water cooler and set it up in one flow')
-//   .action(orderWaterCooler);
-
   program.command('buy')
   .description('Buy a Water Cooler from the Cooler factory')
   .action(buyWaterCooler);
@@ -61,9 +56,9 @@ program.command('init')
   .description('Initiate Water Cooler for mint')
   .action(init);
 
-  program.command('cooler')
-  .description('Returns current water cooler ID')
-  .action(waterCoolerId);
+  program.command('details')
+  .description('Returns the IDs of objects needed to mint NFTs')
+  .action(details);
 
 program.command('stock')
   .description('Stock NFTs in Water Cooler warehouse in preperation for mint')

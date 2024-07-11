@@ -27,6 +27,7 @@ export const MIZU_NFT = "::mizu_nft::MizuNFT";
 // This is preset
 export const PACKAGE_ID = "packageId";
 export const COOLER_FACTOR_ID = "coolerFactoryId";
+export const TRANSFER_POLICY_ID = "transferPolicyId";
 // This is extracted from commands
 export const WATER_COOLER_ID = "waterCoolerId";
 export const WATER_COOLER_ADMIN_ID = "waterCoolerAdminCapId";

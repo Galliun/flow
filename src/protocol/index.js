@@ -5,8 +5,7 @@ import stock from "./functions/stock.js";
 import settings from "./functions/settings.js";
 import reveal from "./functions/reveal.js";
 import distribute from "./functions/distribute.js";
-import waterCoolerId from "./functions/waterCoolerId.js";
-import orderWaterCooler from "./functions/orderWaterCooler.js";
+import details from "./functions/details.js";
 
 export {
   coolerPrice,
@@ -16,6 +15,5 @@ export {
   settings,
   reveal,
   distribute,
-  waterCoolerId,
-  orderWaterCooler
+  details
 }
