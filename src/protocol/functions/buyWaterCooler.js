@@ -7,6 +7,7 @@ import inquirer from 'inquirer';
 
 // Local imports
 import config from "../../../config.json" assert { type: "json" };
+import collection from "../../../collection.json" assert { type: "json" };
 import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
 import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler.js";
 import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
@@ -50,11 +51,11 @@ export default async () => {
   if(answers.confirm == "y") {
     console.log(`Ordering Water Cooler now.`);
 
-    const CoolerDetails = await getWaterCoolerDetails();
+    // const CoolerDetails = await getWaterCoolerDetails();
 
     console.log("Shipping... Your Water Cooler will arrive soon");
 
-    const { name, description, supply, treasury, image_url, placeholder_image_url } = CoolerDetails;
+    // const { name, description, supply, treasury, image_url, placeholder_image_url } = CoolerDetails;
 
     const keypair = getKeypair();
     const client = getClient();
@@ -72,12 +73,12 @@ export default async () => {
       arguments: [
         tx.object(coolerFactoryId),
         coin,
-        tx.pure.string(name),
-        tx.pure.string(description),
-        tx.pure.string(image_url),
-        tx.pure.string(placeholder_image_url),
-        tx.pure.u64(supply),
-        tx.pure.address(treasury)
+        tx.pure.string(collection.name),
+        tx.pure.string(collection.description),
+        tx.pure.string(collection.image_url),
+        tx.pure.string(collection.placeholder_image_url),
+        tx.pure.u64(collection.supply),
+        tx.pure.address(collection.treasury)
       ]
     });
   

@@ -28,8 +28,8 @@ program.command('network')
   .action(getCurrentNetwork);
 
 program.command('switch')
-  .description('Switch connected Sui network to dev or main network')
-  .argument('<string>', 'the network you want to switch to: devnet or mainnet')
+  .description('Switch connected Sui network to testnet or mainnet')
+  .argument('<string>', 'the network you want to switch to: testnet or mainnet')
   .action(switchNetwork);
 
 program.command('balance')
