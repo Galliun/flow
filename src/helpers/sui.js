@@ -20,7 +20,6 @@ export const faucet = async () => {
     if(response.error === null) {
       const topupMistAmount = response.transferredGasObjects[0].amount
       console.log(`Successfully topped up ${mistToSui(topupMistAmount, 1)} $SUI`)
-      await balance()
     } else {
       console.log("Error topping up", response.error)
     }
