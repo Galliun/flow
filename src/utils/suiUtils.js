@@ -15,8 +15,17 @@ import config from "../../config.json" assert { type: "json" };
 
 //  Get the Key pair from the provided Seed Phrase in the .env
 export const getKeypair = () => {
-  const keypair = Ed25519Keypair.deriveKeypair(process.env.SEED_PHRASE);
-  return keypair;
+  try{
+    const keypair = Ed25519Keypair.deriveKeypair(process.env.SEED_PHRASE);
+    return keypair;
+  } catch (e) {
+    if(e.message === "Invalid mnemonic type: undefined"){
+      console.error(`${chalk.red.bold("[Error]")} Please set up the mnemonic in the .env file to start working with Flow or use the command ${chalk.green.bold("flow create-address")} to create a new wallet.`);
+    } else {
+      console.log(e.message)
+    }
+    process.exit(1) // to stop code
+  }
 }
 
 // https://github.com/MystenLabs/sui/blob/02599ed5c4e03845ca3ea06bc0a9ded10fc1aa52/apps/wallet/src/shared/utils/bip39.ts#L13
