@@ -9,3 +9,5 @@ assets/metadata_test.json
 .DS_Store
 .outputs/*
 build
+# IDE
+.idea

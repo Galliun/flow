@@ -46,20 +46,25 @@ This will display a list of commands and a their short description:
 Usage: flow [options] [command]
 
 Options:
-  -V, --version      output the version number
-  -h, --help         display help for command
+  -V, --version    output the version number
+  -h, --help       display help for command
 
 Commands:
-  network            Gives information on the sui network
-  switch <string>    Switch connected Sui network to dev or main network
-  balance            Get connected wallet balance
-  faucet             Request Sui from network faucet
-  price              Get Water Cooler price from the Cooler factory
-  buy                Buy a Water Cooler from the Cooler factory
-  init               Initiate Water Cooler for mint
-  mint               Mint NFT from deployed Water Cooler
-  setting [options]  Change setting on your Water Cooler
-  help [command]     display help for command
+  network          Gives information on the sui network
+  switch <string>  Switch connected Sui network to testnet or mainnet
+  create-address   Generate new address and mnemonic
+  balance          Get connected wallet balance
+  faucet           Request Sui from network faucet
+  address          View current address
+  price            Get Water Cooler price from the Cooler factory
+  buy              Buy a Water Cooler from the Cooler factory
+  init             Initiate Water Cooler for mint
+  details          Returns the IDs of objects needed to mint NFTs
+  stock            Stock NFTs in Water Cooler warehouse in preperation for mint
+  reveal           Reveal the NFT images and attributes
+  set [options]    Change setting on your Water Cooler
+  dist [options]   Distribute OG and WL tickers for your NFT mint
+  help [command]   display help for command
 ```
 
 To get more information about a particular command (e.g., "switch), use the help command:
