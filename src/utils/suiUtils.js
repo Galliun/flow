@@ -30,9 +30,11 @@ export const createMnemonic = () => {
   const keypair = Ed25519Keypair.deriveKeypair(mnemonic);
   const address = keypair.getPublicKey().toSuiAddress()
 
+  const warningMessage = "Don't forget to save the mnemonic in the .env file to start working with FLOW!"
+  const titleMessage = "Wallet Created!"
   const output = boxen(
-      `${chalk.bold('Address:')} ${chalk.blue(address)}\n\n${chalk.bold('Recovery Phrase:')}\n${mnemonic}`,
-      { padding: 1, margin: 1, borderStyle: 'double' }
+      `${chalk.bold('Address:')} ${chalk.blue(address)}\n\n${chalk.bold('Recovery Phrase:')}\n${chalk.green(mnemonic)}\n\n${chalk.bold.red(warningMessage)}`,
+      { title: titleMessage, padding: 1, margin: 1, borderStyle: 'double' }
   );
   console.log(output)
 }
