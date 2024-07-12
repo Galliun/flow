@@ -16,6 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "@mysten/sui": "^1.2.0",
+    "@scure/bip39": "^1.3.0",
+    "boxen": "^7.1.1",
     "commander": "^12.0.0",
     "dotenv": "^16.4.5",
     "inquirer": "^8.2.6"

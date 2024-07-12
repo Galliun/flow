@@ -4,7 +4,7 @@ import packageInfo from '../package.json' assert { type: "json" };
 import { Command } from 'commander';
 
 import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig.js';
-import { balance, faucet, address } from './helpers/sui.js';
+import {balance, faucet, address, createAddress} from './helpers/sui.js';
 import { 
   coolerPrice,
   buyWaterCooler,
@@ -32,6 +32,10 @@ program.command('switch')
   .argument('<string>', 'the network you want to switch to: testnet or mainnet')
   .action(switchNetwork);
 
+program.command('create-address')
+    .description("Generate new address and mnemonic")
+    .action(createAddress)
+
 program.command('balance')
   .description('Get connected wallet balance')
   .action(balance);
@@ -56,7 +60,7 @@ program.command('init')
   .description('Initiate Water Cooler for mint')
   .action(init);
 
-  program.command('details')
+program.command('details')
   .description('Returns the IDs of objects needed to mint NFTs')
   .action(details);
 
