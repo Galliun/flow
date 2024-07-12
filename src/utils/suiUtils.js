@@ -10,6 +10,7 @@ import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import chalk from 'chalk';
 import boxen from 'boxen';
+import bip39 from 'bip39';
 
 import config from "../../config.json" assert { type: "json" };
 
@@ -56,6 +57,12 @@ export const getAddress = () => {
   }
   const publicKey = keypair.getPublicKey();
   return publicKey.toSuiAddress();
+}
+
+//  Get the wallet address from the provided Seed Phrase in the .env
+export const genSeed = () => {
+  const mnemonic = bip39.generateMnemonic();
+  return mnemonic;
 }
 
 //  Get Sui client using the current network
