@@ -5,6 +5,7 @@ import 'dotenv/config';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { SUI_DECIMALS } from '@mysten/sui/utils';
 import { getFullnodeUrl, SuiClient } from '@mysten/sui/client';
+import bip39 from 'bip39';
 
 import config from "../../config.json" assert { type: "json" };
 
@@ -19,6 +20,12 @@ export const getAddress = () => {
   const keypair = getKeypair();
   const publicKey = keypair.getPublicKey();
   return publicKey.toSuiAddress();
+}
+
+//  Get the wallet address from the provided Seed Phrase in the .env
+export const genSeed = () => {
+  const mnemonic = bip39.generateMnemonic();
+  return mnemonic;
 }
 
 //  Get Sui client using the current network
