@@ -5,35 +5,35 @@ import 'dotenv/config';
 import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import data from "../../../assets/metadata.json" assert { type: "json" };
-import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getPacakgeId } from "../../utils/waterCooler.js";
-import { writeFile, readFile } from "../../utils/fileUtils.js";
+import config from "../../../config.json";
+import data from "../../../assets/metadata.json";
+import { getClient, getKeypair } from "../../utils/suiUtils";
+import { getPacakgeId } from "../../utils/waterCooler";
+import { writeFile, readFile } from "../../utils/fileUtils";
 import { 
   MINT_ADMIN_CAP_ID,
   REGISTRY_ID,
   REVEAL,
   BUY,
   INIT_OBJECTS
- } from "../../constants.js";
+ } from "../../constants";
+import { buyObjectInterface } from '../../interface/buyObjectInterface';
+import {InitObjectInterface} from "../../interface/initObjectInterface";
 
-
- function findNFT(NFTs, number) {
+ function findNFT(NFTs: any, number: number) {
   for (let i = 0; i < NFTs.length; i++) {
     const object = NFTs[i];
     if (parseInt(object.data.content.fields.number) === number) {
       return object;
     }
-    continue;
   }
-};
+}
 
 export default async () => {
   console.log("Revealing NFTs");
 
-  const buyObject = await readFile(`${config.network}_${BUY}`);
-  const initObject = await readFile(`${config.network}_${INIT_OBJECTS}`);
+  const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
+  const initObject = await readFile(`${config.network}_${INIT_OBJECTS}`) as InitObjectInterface;
   const keypair = getKeypair();
   const client = getClient();
   const packageId = getPacakgeId();
@@ -45,17 +45,17 @@ export default async () => {
     console.log(`Revealing NFT #${i + 1}`);
     const nftData = data.metadata[i];
 
-    let nftMoveObject = findNFT(initObject.mizuNFTIDs, nftData.number);
+    let nftMoveObject = findNFT(initObject?.MIZU_NFT_IDS, nftData.number);
 
     const tx = new Transaction();
 
     const dataKeys = Object.keys(nftData.attributes);
-    const dataValues = Object.values(nftData.attributes);
+    const dataValues: any[] = Object.values(nftData.attributes);
 
     let pureKeys = dataKeys.map(key => tx.pure.string(key));
     let pureValues = dataValues.map(value => tx.pure.string(value));
 
-    let dataObject = {};
+    let dataObject: {number: number | null, digest: string | null} = {number:null, digest: null};
     
     tx.setGasBudget(config.gasBudgetAmount);
 
@@ -72,8 +72,8 @@ export default async () => {
     tx.moveCall({
       target: `${packageId}::mint::admin_reveal_nft`,
       arguments: [
-        tx.object(buyObject[MINT_ADMIN_CAP_ID]),
-        tx.object(buyObject[REGISTRY_ID]),
+        tx.object(buyObject.MINT_ADMIN_CAP_ID),
+        tx.object(buyObject.REGISTRY_ID),
         tx.object(nftMoveObject.data.objectId),
         keys,
         values,

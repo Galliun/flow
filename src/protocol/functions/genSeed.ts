@@ -2,7 +2,7 @@
 import 'dotenv/config';
 
 // Local imports
-import { genSeed } from "../../utils/suiUtils.js";
+import { genSeed } from "../../utils/suiUtils";
 
 // Display the price of a Water Cooler in $SUI
 export default async () => {

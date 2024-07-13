@@ -5,18 +5,18 @@ import 'dotenv/config';
 import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getPacakgeId } from "../../utils/waterCooler.js";
-import { readFile } from "../../utils/fileUtils.js";
-import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID, BUY } from "../../constants.js";
+import config from "../../../config.json";
+import { getClient, getKeypair } from "../../utils/suiUtils";
+import { getPacakgeId } from "../../utils/waterCooler";
+import { readFile } from "../../utils/fileUtils";
+import { MINT_ADMIN_CAP_ID, MINT_SETTING_ID, BUY } from "../../constants";
+import {buyObjectInterface} from '../../interface/buyObjectInterface';
 
+export default async (options: any) => {
+    const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
 
-export default async (options) => {
-    const buyObject = await readFile(`${config.network}_${BUY}`);
-
-    const mintAdminCapObjectId = buyObject[MINT_ADMIN_CAP_ID];
-    const mintSettingsObjectId = buyObject[MINT_SETTING_ID]
+    const mintAdminCapObjectId = buyObject.MINT_ADMIN_CAP_ID
+    const mintSettingsObjectId = buyObject.MINT_SETTING_ID
 
     if (options.amount) {
         console.log(`Changing mint price to: ${options.amount}`);
@@ -34,8 +34,8 @@ export default async (options) => {
         tx.moveCall({
             target: `${packageId}::mint::set_mint_price`,
             arguments: [
-            tx.object(buyObject[MINT_ADMIN_CAP_ID]),
-            tx.object(buyObject[MINT_SETTING_ID]),   
+            tx.object(buyObject.MINT_ADMIN_CAP_ID),
+            tx.object(buyObject.MINT_SETTING_ID),   
             tx.pure.u64(amount),
             ]
         });

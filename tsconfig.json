@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "resolveJsonModule": true, // for json file
+    "strict": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

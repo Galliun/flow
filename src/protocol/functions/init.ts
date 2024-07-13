@@ -5,12 +5,12 @@ import 'dotenv/config';
 import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getPacakgeId } from "../../utils/waterCooler.js";
-import { writeFile, readFile } from "../../utils/fileUtils.js";
-import { getMoveObjectArray } from "../../utils/getMoveObjectArray.js";
-import { getObjectIdArrayFromObject } from "../../utils/getObjectIdArray.js";
+import config from "../../../config.json";
+import { getClient, getKeypair } from "../../utils/suiUtils";
+import { getPacakgeId } from "../../utils/waterCooler";
+import { writeFile, readFile } from "../../utils/fileUtils";
+import { getMoveObjectArray } from "../../utils/getMoveObjectArray";
+import { getObjectIdArrayFromObject } from "../../utils/getObjectIdArray";
 import { 
   WATER_COOLER_ID,
   WATER_COOLER_ADMIN_ID,
@@ -22,12 +22,14 @@ import {
   BUY,
   MIZU_NFT,
   MIZU_NFT_IDS
- } from "../../constants.js";
+ } from "../../constants";
+import { buyObjectInterface } from '../../interface/buyObjectInterface';
+import {InitObjectInterface} from "../../interface/initObjectInterface";
 
 export default async () => {
   console.log("Initiate Water Cooler");
 
-  const buyObject = await readFile(`${config.network}_${BUY}`);
+  const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
   const keypair = getKeypair();
   const client = getClient();
   const packageId = getPacakgeId();
@@ -38,10 +40,10 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::water_cooler::initialize_water_cooler`,
     arguments: [
-      tx.object(buyObject[WATER_COOLER_ADMIN_ID]),
-      tx.object(buyObject[WATER_COOLER_ID]),
-      tx.object(buyObject[REGISTRY_ID]),
-      tx.object(buyObject[COLLECTION_ID]),
+      tx.object(buyObject.WATER_COOLER_ADMIN_ID),
+      tx.object(buyObject.WATER_COOLER_ID),
+      tx.object(buyObject.REGISTRY_ID),
+      tx.object(buyObject.COLLECTION_ID),
     ]
   });
 
@@ -51,17 +53,23 @@ export default async () => {
     options: { showObjectChanges: true },
   });
   
-  let initObjects = {};
+  let initObjects: InitObjectInterface = {
+    MIZU_NFT_IDS: "",
+    DIGEST: "",
+  };
   const mizuNFTIdArrayObjects = await getMoveObjectArray(MIZU_NFT, objectChange);
-  initObjects[MIZU_NFT_IDS] = mizuNFTIdArrayObjects;
-  initObjects[DIGEST] = objectChange?.digest;
+  initObjects.MIZU_NFT_IDS = mizuNFTIdArrayObjects;
+  initObjects.DIGEST = objectChange?.digest;
   await writeFile(`${config.network}_${INIT_OBJECTS}`, initObjects);
   
   
-  let initObjectIds = {};
+  let initObjectIds: InitObjectInterface = {
+    MIZU_NFT_IDS: "",
+    DIGEST: "",
+  };
   const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
-  initObjectIds[MIZU_NFT_IDS] = mizuNFTIdArray;
-  initObjectIds[DIGEST] = objectChange?.digest;
+  initObjectIds.MIZU_NFT_IDS = mizuNFTIdArray;
+  initObjectIds.DIGEST = objectChange?.digest;
   await writeFile(`${config.network}_${INIT}`, initObjectIds);
 
   console.log("Your Water Cooler has been initiated.");

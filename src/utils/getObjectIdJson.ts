@@ -1,12 +1,12 @@
 // Node imports
-import { getPacakgeId } from './waterCooler.js';
+import { getPacakgeId } from './waterCooler';
 
-export const getObjectIdJson = (type, jsonContent) => {
+export const getObjectIdJson = (type: string, jsonContent: any) => {
   return new Promise(async (resolve, reject) => {
     const packageId = getPacakgeId();
 
     // find the object that has the type "published"
-    function objectType(object) {
+    function objectType(object: any) {
       return object.objectType == `${packageId}${type}`;
     };
 

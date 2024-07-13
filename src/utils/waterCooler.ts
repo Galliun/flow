@@ -4,20 +4,23 @@ import 'dotenv/config';
 // Packages imports
 import inquirer from 'inquirer';
 
-import config from "../../config.json" assert { type: "json" };
+import config from "../../config.json";
+import {ConfigInterface} from "../interface/configInterface";
 
-export const delay = ms => new Promise(res => setTimeout(res, ms));
+export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export const getPacakgeId = () => {
-  return config[config.network].packageId;
+  const iConfig = config as ConfigInterface
+  return iConfig[iConfig.network].packageId;
 }
 
 export const getCoolerFactoryId = () => {
-  return config[config.network].coolerFactoryId;
+  const iConfig = config as ConfigInterface
+  return iConfig[iConfig.network].coolerFactoryId;
 }
 
 // Ask questions in order to get the info need to create a Water Cooler
-export const getWaterCoolerDetails = async () => {
+export const getWaterCoolerDetails = async (): Promise<any> => {
   const prompt = inquirer.createPromptModule();
   const answers = await prompt([
     {

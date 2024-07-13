@@ -6,24 +6,26 @@ import 'dotenv/config';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { SUI_DECIMALS } from '@mysten/sui/utils';
 import { getFullnodeUrl, SuiClient } from '@mysten/sui/client';
-import * as bip39 from '@scure/bip39';
+import { generateMnemonic as bip39GenerateMnemonic } from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import chalk from 'chalk';
 import boxen from 'boxen';
-import bip39 from 'bip39';
 
-import config from "../../config.json" assert { type: "json" };
+import config from "../../config.json";
 
 //  Get the Key pair from the provided Seed Phrase in the .env
 export const getKeypair = () => {
   try{
-    const keypair = Ed25519Keypair.deriveKeypair(process.env.SEED_PHRASE);
+    const keypair = Ed25519Keypair.deriveKeypair(process.env.SEED_PHRASE!);
     return keypair;
-  } catch (e) {
-    if(e.message === "Invalid mnemonic type: undefined"){
-      console.error(`${chalk.red.bold("[Error]")} Please set up the mnemonic in the .env file to start working with Flow or use the command ${chalk.green.bold("flow create-address")} to create a new wallet.`);
-    } else {
-      console.log(e.message)
+  } catch (e: unknown) {
+    // we need to use unknown because error can be anything(null, number, {}, undefined)
+    if (e instanceof Error) {
+      if (e.message === "Invalid mnemonic type: undefined") {
+        console.error(`${chalk.red.bold("[Error]")} Please set up the mnemonic in the .env file to start working with Flow or use the command ${chalk.green.bold("flow create-address")} to create a new wallet.`);
+      } else {
+        console.log(e.message)
+      }
     }
     process.exit(1) // to stop code
   }
@@ -31,7 +33,7 @@ export const getKeypair = () => {
 
 // https://github.com/MystenLabs/sui/blob/02599ed5c4e03845ca3ea06bc0a9ded10fc1aa52/apps/wallet/src/shared/utils/bip39.ts#L13
 export function generateMnemonic() {
-  return bip39.generateMnemonic(wordlist);
+  return bip39GenerateMnemonic(wordlist);
 }
 
 export const createMnemonic = () => {
@@ -61,19 +63,19 @@ export const getAddress = () => {
 
 //  Get the wallet address from the provided Seed Phrase in the .env
 export const genSeed = () => {
-  const mnemonic = bip39.generateMnemonic();
+  const mnemonic = bip39GenerateMnemonic(wordlist);
   return mnemonic;
 }
 
 //  Get Sui client using the current network
 export const getClient = () => {
   return new SuiClient({
-    url: getFullnodeUrl(config.network),
+    url: getFullnodeUrl(config.network as any),
   });
 }
 
 // Convert int Mist to double Sui
-export const mistToSui = (rawMist, defaultDecimals = 9) => {
+export const mistToSui = (rawMist: string, defaultDecimals = 9) => {
   const mist = parseInt(rawMist);
   const divisor = Math.pow(10, SUI_DECIMALS);
   const balance = mist / divisor;
@@ -81,16 +83,15 @@ export const mistToSui = (rawMist, defaultDecimals = 9) => {
 }
 
 // Convert double Sui to int Mist
-export const suiToMist = (rawSui) => {
-
+export const suiToMist = (rawSui: string) => {
   console.log("rawSui", rawSui);
-
   const sui = parseFloat(rawSui);
 
   console.log("sui", sui);
+  
   const multiplier = Math.pow(10, SUI_DECIMALS);
   const balance = sui * multiplier;
-
+  
   console.log("balance", balance);
   return balance;
 }

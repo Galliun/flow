@@ -5,22 +5,23 @@ import 'dotenv/config';
 import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
+import config from "../../../config.json";
 
-import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getPacakgeId } from "../../utils/waterCooler.js";
-import readTickets from "../../utils/readTickets.js";
-import { readFile } from "../../utils/fileUtils.js";
-import { MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID, BUY } from "../../constants.js";
+import { getClient, getKeypair } from "../../utils/suiUtils";
+import { getPacakgeId } from "../../utils/waterCooler";
+import readTickets from "../../utils/readTickets";
+import { readFile } from "../../utils/fileUtils";
+import { MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID, BUY } from "../../constants";
+import { buyObjectInterface } from '../../interface/buyObjectInterface';
 
-const distributeTickets = async (ticketType) => {
+const distributeTickets = async (ticketType: string) => {
 
     console.log("Starting distributuion...");
 
     const keypair = getKeypair();
     const client = getClient();
     const packageId = getPacakgeId();
-    const buyObject = await readFile(`${config.network}_${BUY}`);
+    const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
     const ticketListObject = await readTickets(ticketType);
 
     for (let i = 0; i < ticketListObject.ticketList.length; i++) {
@@ -35,8 +36,8 @@ const distributeTickets = async (ticketType) => {
             tx.moveCall({
                 target: `${packageId}::mint::create_${ticketType}_ticket`,
                 arguments: [
-                    tx.object(buyObject[MINT_ADMIN_CAP_ID]),
-                    tx.object(buyObject[MINT_WAREHOUSE_ID]),
+                    tx.object(buyObject.MINT_ADMIN_CAP_ID),
+                    tx.object(buyObject.MINT_WAREHOUSE_ID),
                     tx.object(address)
                 ],
             });
@@ -58,8 +59,9 @@ const distributeTickets = async (ticketType) => {
     console.log(`All tickets have been distributed`);
 }
 
+type OptionsType = {og: string, wl: string}
 
-export default async (options) => {
+export default async (options: OptionsType) => {
     if (options.og) {
         console.log(`distribute OG tickets`);
         distributeTickets("og");

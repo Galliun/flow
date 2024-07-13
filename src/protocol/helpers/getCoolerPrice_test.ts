@@ -5,9 +5,9 @@ import 'dotenv/config';
 import { Transaction } from '@mysten/sui/transactions';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import { getClient, getKeypair } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId } from "../../utils/waterCooler.js";
+import config from "../../../config.json";
+import { getClient, getKeypair } from "../../utils/suiUtils";
+import { getCoolerFactoryId, getPacakgeId } from "../../utils/waterCooler";
 
 // Get the price for buying a Water Cooler from the Water Cooler protocol
 // from the Water Cooler Factory

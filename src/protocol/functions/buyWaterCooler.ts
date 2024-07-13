@@ -6,13 +6,14 @@ import { Transaction } from '@mysten/sui/transactions';
 import inquirer from 'inquirer';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import collection from "../../../collection.json" assert { type: "json" };
-import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler.js";
-import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
-import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
-import { writeFile } from "../../utils/fileUtils.js";
+import config from "../../../config.json";
+// @ts-ignore
+import collection from "../../../collection.json";
+import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler";
+import { getObjectIdJson } from "../../utils/getObjectIdJson";
+import { getCoolerPrice } from "../helpers/getCoolerPrice";
+import { writeFile } from "../../utils/fileUtils";
 import { 
   WATER_COOLER,
   WATER_COOLER_ID,
@@ -31,7 +32,8 @@ import {
   COLLECTION_ID,
   DIGEST,
   BUY
- } from "../../constants.js";
+ } from "../../constants";
+import { buyObjectInterface } from '../../interface/buyObjectInterface';
 
 
 // Buy a Water Cooler from the Factory in the Water Cooler Protocol
@@ -88,17 +90,27 @@ export default async () => {
       options: { showObjectChanges: true }
     });
 
-    let buyObjects = {};
+    let buyObjects: buyObjectInterface = {
+      WATER_COOLER_ID: null,
+      WATER_COOLER_ADMIN_ID: null,
+      REGISTRY_ID: null,
+      REGISTRY_ADMIN_CAP_ID: null,
+      MINT_SETTING_ID: null,
+      MINT_WAREHOUSE_ID: null,
+      MINT_ADMIN_CAP_ID: null,
+      COLLECTION_ID: null,
+      DIGEST: ''
+    };
 
-    buyObjects[WATER_COOLER_ID] = await getObjectIdJson(WATER_COOLER, objectChange);
-    buyObjects[WATER_COOLER_ADMIN_ID] = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
-    buyObjects[REGISTRY_ID] = await getObjectIdJson(REGISTRY, objectChange);
-    buyObjects[REGISTRY_ADMIN_CAP_ID] = await getObjectIdJson(REGISTRY_ADMIN, objectChange);
-    buyObjects[MINT_SETTING_ID] = await getObjectIdJson(MINT_SETTINGS, objectChange);
-    buyObjects[MINT_WAREHOUSE_ID] = await getObjectIdJson(MINT_WAREHOUSE, objectChange);
-    buyObjects[MINT_ADMIN_CAP_ID] = await getObjectIdJson(MINT_ADMIN, objectChange);
-    buyObjects[COLLECTION_ID] = await getObjectIdJson(COLLECTION, objectChange);;
-    buyObjects[DIGEST] = objectChange?.digest;
+    buyObjects.WATER_COOLER_ID= await getObjectIdJson(WATER_COOLER, objectChange);
+    buyObjects.WATER_COOLER_ADMIN_ID = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
+    buyObjects.REGISTRY_ID = await getObjectIdJson(REGISTRY, objectChange);
+    buyObjects.REGISTRY_ADMIN_CAP_ID = await getObjectIdJson(REGISTRY_ADMIN, objectChange);
+    buyObjects.MINT_SETTING_ID = await getObjectIdJson(MINT_SETTINGS, objectChange);
+    buyObjects.MINT_WAREHOUSE_ID = await getObjectIdJson(MINT_WAREHOUSE, objectChange);
+    buyObjects.MINT_ADMIN_CAP_ID = await getObjectIdJson(MINT_ADMIN, objectChange);
+    buyObjects.COLLECTION_ID = await getObjectIdJson(COLLECTION, objectChange);;
+    buyObjects.DIGEST = objectChange?.digest;
 
     await writeFile(`${config.network}_${BUY}`, buyObjects);
 

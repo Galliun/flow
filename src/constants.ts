@@ -1,7 +1,9 @@
 // ==== Networks ====
-export const DEVNET = "devnet";
-export const MAINNET = "mainnet";
-export const TESTNET = "testnet";
+export const DEVNET: string = "devnet";
+export const MAINNET: string = "mainnet";
+export const TESTNET: string = "testnet";
+
+export type NETWORK = 'devnet' | "mainnet" | "testnet";
 
 // ==== Digest ====
 export const DIGEST = "digest";
