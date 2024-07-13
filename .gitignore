@@ -11,3 +11,6 @@ assets/metadata_test.json
 build
 # IDE
 .idea
+# TS
+dist
+tsconfig.tsbuildinfo
