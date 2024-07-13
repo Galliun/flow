@@ -10,7 +10,6 @@ import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import chalk from 'chalk';
 import boxen from 'boxen';
-import bip39 from 'bip39';
 
 import config from "../../config.json" assert { type: "json" };
 
@@ -29,7 +28,6 @@ export const getKeypair = () => {
   }
 }
 
-// https://github.com/MystenLabs/sui/blob/02599ed5c4e03845ca3ea06bc0a9ded10fc1aa52/apps/wallet/src/shared/utils/bip39.ts#L13
 export function generateMnemonic() {
   return bip39.generateMnemonic(wordlist);
 }
@@ -57,12 +55,6 @@ export const getAddress = () => {
   }
   const publicKey = keypair.getPublicKey();
   return publicKey.toSuiAddress();
-}
-
-//  Get the wallet address from the provided Seed Phrase in the .env
-export const genSeed = () => {
-  const mnemonic = bip39.generateMnemonic();
-  return mnemonic;
 }
 
 //  Get Sui client using the current network
