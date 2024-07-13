@@ -1,11 +1,10 @@
-#!/usr/bin/env -S node --no-warnings=ExperimentalWarning
-
-import packageInfo from '../package.json';
+#!/usr/bin/env -S tsx --no-warnings=ExperimentalWarning
+import packageInfo from '../package.json' assert { type: 'json' };
 import { Command } from 'commander';
 
 import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig';
 import {balance, faucet, address, createAddress} from './helpers/sui';
-import { 
+import {
   coolerPrice,
   buyWaterCooler,
   init,
@@ -15,7 +14,7 @@ import {
   reveal,
   distribute,
   genSeed
-} from './protocol';
+} from './protocol/index';
 
 const program = new Command();
 
@@ -49,7 +48,7 @@ program.command('genseed')
   .description('generate a mnemonic seed phrase')
   .action(genSeed);
 
-  program.command('address')
+program.command('address')
   .description('View current address')
   .action(address);
 
