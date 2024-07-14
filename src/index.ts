@@ -1,5 +1,5 @@
 #!/usr/bin/env -S tsx --no-warnings=ExperimentalWarning
-import packageInfo from '../package.json' assert { type: 'json' };
+import packageInfo from '../package.json';
 import { Command } from 'commander';
 
 import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig';
