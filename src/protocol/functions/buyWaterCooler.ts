@@ -34,31 +34,35 @@ import {
   BUY
  } from "../../constants";
 import { buyObjectInterface } from '../../interface/buyObjectInterface';
+import { isCollectionFilled } from "../../utils/collectionUtils";
+
 
 
 // Buy a Water Cooler from the Factory in the Water Cooler Protocol
 export default async () => {
   const price = await getCoolerPrice();
 
+  // Before asking to buy, ensure that collection.json is filled. Otherwise, an error will occur
+  isCollectionFilled(collection)
+
+
   const prompt = inquirer.createPromptModule();
   const answers = await prompt([
     {
       type: "input",
       name: "confirm",
-      message: `You are about to buy a Water Cooler for ${mistToSui(price)} $SUI. To confirm type y or n to cancel:`
+      message: `Do you want to buy a Water Cooler(to create a new collection) for ${mistToSui(price)} $SUI?(yes/y or no/n):`
     }
   ]);
 
   // Execute buy order to protocol
-  if(answers.confirm == "y") {
+  if(answers.confirm === "y" || answers.confirm === "yes") {
     console.log(`Ordering Water Cooler now.`);
 
     // const CoolerDetails = await getWaterCoolerDetails();
-
     console.log("Shipping... Your Water Cooler will arrive soon");
 
     // const { name, description, supply, treasury, image_url, placeholder_image_url } = CoolerDetails;
-
     const keypair = getKeypair();
     const client = getClient();
     const packageId = getPacakgeId();
@@ -67,7 +71,6 @@ export default async () => {
     tx.setGasBudget(config.gasBudgetAmount);
 
     const [coin] = tx.splitCoins(tx.gas, [price]);
-
     const coolerFactoryId = getCoolerFactoryId();
 
     tx.moveCall({
@@ -83,7 +86,6 @@ export default async () => {
         tx.pure.address(collection.treasury)
       ]
     });
-  
     const objectChange = await client.signAndExecuteTransaction({
       signer: keypair,
       transaction: tx,
@@ -113,9 +115,9 @@ export default async () => {
     buyObjects.DIGEST = objectChange?.digest;
 
     await writeFile(`${config.network}_${BUY}`, buyObjects);
-
+    console.log(`You can check output file here: output/${config.network}_${BUY}`)
     console.log("Your Water Cooler has arrived.");
   } else {
-    console.log(`Buy order canceled.`);
+    console.log(`Order canceled`);
   }
 }
