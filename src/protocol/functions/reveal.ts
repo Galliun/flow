@@ -20,13 +20,16 @@ import {
 import { buyObjectInterface } from '../../interface/buyObjectInterface';
 import {InitObjectInterface} from "../../interface/initObjectInterface";
 
- function findNFT(NFTs: any, number: number) {
-  for (let i = 0; i < NFTs.length; i++) {
-    const object = NFTs[i];
-    if (parseInt(object.data.content.fields.number) === number) {
-      return object;
+function findNFT(objectsResponse: any[], number: number) {
+  for (const nftObject of objectsResponse) {
+    if ('data' in nftObject && nftObject.data && 'content' in nftObject.data && nftObject.data.content && 'fields' in nftObject.data.content) {
+      const objectNumber = parseInt(nftObject.data.content.fields.number);
+      if (objectNumber === number) {
+        return nftObject;
+      }
     }
   }
+  return null;
 }
 
 export default async () => {
@@ -56,7 +59,7 @@ export default async () => {
     let pureValues = dataValues.map(value => tx.pure.string(value));
 
     let dataObject: {number: number | null, digest: string | null} = {number:null, digest: null};
-    
+
     tx.setGasBudget(config.gasBudgetAmount);
 
     const keys = tx.makeMoveVec({
@@ -68,13 +71,13 @@ export default async () => {
       type: `0x1::string::String`,
       elements: pureValues
     });
-   
+
     tx.moveCall({
       target: `${packageId}::mint::admin_reveal_nft`,
       arguments: [
         tx.object(buyObject.MINT_ADMIN_CAP_ID),
         tx.object(buyObject.REGISTRY_ID),
-        tx.object(nftMoveObject.data.objectId),
+        tx.object(nftMoveObject?.data?.objectId),
         keys,
         values,
         tx.pure.string(nftData.image_url),
