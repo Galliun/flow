@@ -31,7 +31,6 @@ export const getKeypair = () => {
   }
 }
 
-// https://github.com/MystenLabs/sui/blob/02599ed5c4e03845ca3ea06bc0a9ded10fc1aa52/apps/wallet/src/shared/utils/bip39.ts#L13
 export function generateMnemonic() {
   return bip39GenerateMnemonic(wordlist);
 }
@@ -61,12 +60,6 @@ export const getAddress = () => {
   return publicKey.toSuiAddress();
 }
 
-//  Get the wallet address from the provided Seed Phrase in the .env
-export const genSeed = () => {
-  const mnemonic = bip39GenerateMnemonic(wordlist);
-  return mnemonic;
-}
-
 //  Get Sui client using the current network
 export const getClient = () => {
   return new SuiClient({
@@ -88,10 +81,10 @@ export const suiToMist = (rawSui: string) => {
   const sui = parseFloat(rawSui);
 
   console.log("sui", sui);
-  
+
   const multiplier = Math.pow(10, SUI_DECIMALS);
   const balance = sui * multiplier;
-  
+
   console.log("balance", balance);
   return balance;
 }

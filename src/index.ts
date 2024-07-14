@@ -12,8 +12,7 @@ import {
   stock,
   details,
   reveal,
-  distribute,
-  genSeed
+  distribute
 } from './protocol/index';
 
 const program = new Command();
@@ -44,11 +43,7 @@ program.command('faucet')
   .description('Request Sui from network faucet')
   .action(faucet);
 
-program.command('genseed')
-  .description('generate a mnemonic seed phrase')
-  .action(genSeed);
-
-program.command('address')
+  program.command('address')
   .description('View current address')
   .action(address);
 
