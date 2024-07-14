@@ -35,13 +35,12 @@ export default async () => {
   const tx = new Transaction();
 
   tx.setGasBudget(config.gasBudgetAmount);
-
   tx.moveCall({
     target: `${packageId}::mint::add_to_mint_warehouse`,
     arguments: [
       tx.object(buyObject.MINT_ADMIN_CAP_ID),
       tx.object(buyObject.WATER_COOLER_ID),
-      tx.makeMoveVec({ elements: initObject.MIZU_NFT_IDS[MIZU_NFT_IDS] }),
+      tx.makeMoveVec({ elements: initObject.MIZU_NFT_IDS }),
       tx.object(buyObject.MINT_WAREHOUSE_ID),
     ]
   });
