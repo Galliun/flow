@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "Command line tool for deploying and managing NFT collections on the Sui blockchain.",
   "main": "./dist/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "flow": "npx tsx src/index.ts"
+    "start": "tsx src/index.ts",
+    "build": "tsc"
   },
   "bin": {
-    "flow": "tsc && npx tsx src/index.ts"
+    "flow": "tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
-    "tsx": "^4.16.2"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
   }
 }
