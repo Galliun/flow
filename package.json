@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "bin": {
-    "flow": "tsx src/index.ts"
+    "flow": "src/index.ts"
   },
   "keywords": [],
   "author": "",

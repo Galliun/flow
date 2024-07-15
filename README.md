@@ -27,6 +27,11 @@ npm i
 npm i -g
 ```
 
+The CLI is written in TypeScript and uses tsx to execute to code so make sure you have it installed globally:
+```shell
+npm i tsx -g
+```
+
 Add the seed phrase of the wallet you want to use as the Water Cooler manager in the .env file. Use the .env.dev file as a reference.
 ```
 mv .env.example .env
