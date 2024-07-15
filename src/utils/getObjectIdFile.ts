@@ -1,19 +1,19 @@
 // Node imports
 import fs from 'fs';
-import { getPacakgeId } from './waterCooler.js';
+import { getPacakgeId } from './waterCooler';
 
 // This path is used to check of the file exists because fs.existsSync checks from the current working dir
 const dataPath = '.outputs/water_cooler.json';
 
 // This is used to read the data into the file as the import is done from the current file location directory
-const waterCoolerData = '../.outputs/water_cooler.json';
+const waterCoolerData = './../../.outputs/water_cooler.json';
 
-export const getObjectId = (type) => {
+export const getObjectIdFile = (type: string) => {
   return new Promise(async (resolve, reject) => {
     const packageId = getPacakgeId();
 
     // find the object that has the type "published"
-    function objectType(object) {
+    function objectType(object: any) {
       return object.objectType == `${packageId}${type}`;
     };
 
@@ -33,11 +33,11 @@ export const getObjectId = (type) => {
         resolve(object?.objectId);
       } else {
         // console.log("The project has not been deployed yet.");
-        reject("No Water Cooler was found");
+        reject("Error while retriving ID from json file");
       }
 
     } catch (error) {
-      reject("No Water Cooler was found");
+      reject("Error while retriving ID from json file");
     }
   });
 };

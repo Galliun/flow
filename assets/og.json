@@ -1,0 +1,12 @@
+{
+  "ticketList": [
+    {
+      "address": "0xABC",
+      "amount": 1
+    },
+    {
+      "address": "0x123",
+      "amount": 2
+    }
+  ]
+}

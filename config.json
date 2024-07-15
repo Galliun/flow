@@ -1,31 +1,17 @@
 {
+    "gasBudgetAmount": 1000000000,
+    "network": "testnet",
     "devnet": {
-        "packageId": "0x0b3c2c0a88cae76d15e06de19441b2ded3919e23192dd6adb449c2c996a4c7b8",
-        "coolerFactoryId": "0xa25f1545a2be7bafb935a2895906c50cafe40ddc962a500ff097d6734af7eb62",
-        "current_water_cooler": ""
+        "packageId": "",
+        "coolerFactoryId": ""
     },
     "testnet": {
-        "packageId": "0x0b3c2c0a88cae76d15e06de19441b2ded3919e23192dd6adb449c2c996a4c7b8",
-        "coolerFactoryId": "0xa25f1545a2be7bafb935a2895906c50cafe40ddc962a500ff097d6734af7eb62",
-        "current_water_cooler": ""
+        "packageId": "0xa401bdf6783c4409ce79f731576a2a3a6d9276e6005c8f73555e54ea56014c01",
+        "coolerFactoryId": "0xfd9f731f73ea666e0a0c04ae448beadc20ae01c3a36bc10db84e178386e497f3",
+        "transferPolicyId": "0x96ba0c3d3b3bf51bfebeb44f285ed47f5bc3c0c2c4182ec33cf1895e167187e6"
     },
     "mainnet": {
         "packageId": "",
-        "coolerFactoryId": "",
-        "current_water_cooler": ""
-    },
-    "og": {
-        "price": 0,
-        "phase": 1
-    },
-    "wl": {
-        "price": 0,
-        "phase": 2
-    },
-    "public": {
-        "price": 0,
-        "phase": 3
-    },
-    "gasBudgetAmount": 1000000000,
-    "network": "testnet"
+        "coolerFactoryId": ""
+    }
 }

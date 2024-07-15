@@ -2,25 +2,34 @@
 import 'dotenv/config';
 
 // Local imports
-import { getClient } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId } from "../../utils/waterCooler.js";
+import { getClient } from "../../utils/suiUtils";
+import { getCoolerFactoryId } from "../../utils/waterCooler";
 
 // Get the price for buying a Water Cooler from the Water Cooler protocol
 // from the Water Cooler Factory
-export const getCoolerPrice = async () => {
+export const getCoolerPrice = async (): Promise<any> => {
   return new Promise(async (res, rej) => {
-    const client = getClient();
-    const coolerFactoryId = getCoolerFactoryId();
+    try {
+      const client = getClient();
+      const coolerFactoryId = getCoolerFactoryId();
 
-    const coolerFactory = await client.getObject({
-      id: coolerFactoryId,
-      // fetch the object content field
-      options: { showContent: true },
-    });
+      const coolerFactory = await client.getObject({
+        id: coolerFactoryId,
+        // fetch the object content field
+        options: { showContent: true, },
+      });
 
-    // To Do: fix this any casting
-    const response = coolerFactory?.data?.content as any;    
-
-    res(response?.fields?.fee);
+      const response = coolerFactory?.data?.content;
+      
+      if (response && "fields" in response) {
+        res((response as any).fields.fee);
+      } else {
+        rej("The 'fields' property does not exist on the response object.");
+      }
+    } catch (error) {
+      if(error instanceof Error){
+        rej(`An error occurred: ${error.message}`);
+      }
+    }
   });
 }

@@ -1,13 +1,24 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "rootDir": "./", // By setting rootDir to ./src
     "esModuleInterop": true,
-    "sourceMap": true,
-    "allowJs": true,
-    "target": "ESNext",
-    "outDir": "./build"
+    "resolveJsonModule": true, // for json file
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"]
+    }
   },
-  "include": ["./src/**/*"]
+  "include": [
+    "src/**/*",
+    "config.json",  // add your JSON file outside the asset folder
+    "collection.json"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

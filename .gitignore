@@ -1,8 +1,17 @@
 node_modules
-nfts/attributes/*
-nfts/images/*
+assets/attributes/*
+assets/images/*
+assets/og_test.json
+assets/wl_test.json
+assets/metadata_test.json
 .env
 .temp
 .DS_Store
 .outputs/*
 build
+# IDE
+.idea
+# TS
+dist
+dist/*
+tsconfig.tsbuildinfo
