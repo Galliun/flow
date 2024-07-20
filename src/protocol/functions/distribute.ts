@@ -36,8 +36,8 @@ const distributeTickets = async (ticketType: string) => {
             tx.moveCall({
                 target: `${packageId}::mint::create_${ticketType}_ticket`,
                 arguments: [
-                    tx.object(buyObject.MINT_ADMIN_CAP_ID),
-                    tx.object(buyObject.MINT_WAREHOUSE_ID),
+                    tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+                    tx.object(buyObject[MINT_WAREHOUSE_ID]),
                     tx.object(address)
                 ],
             });

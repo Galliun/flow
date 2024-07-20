@@ -15,8 +15,8 @@ import {buyObjectInterface} from '../../interface/buyObjectInterface';
 export default async (options: any) => {
     const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
 
-    const mintAdminCapObjectId = buyObject.MINT_ADMIN_CAP_ID
-    const mintSettingsObjectId = buyObject.MINT_SETTING_ID
+    const mintAdminCapObjectId = buyObject[MINT_ADMIN_CAP_ID];
+    const mintSettingsObjectId = buyObject[MINT_SETTING_ID];
 
     if (options.amount) {
         console.log(`Changing mint price to: ${options.amount}`);
@@ -34,8 +34,8 @@ export default async (options: any) => {
         tx.moveCall({
             target: `${packageId}::mint::set_mint_price`,
             arguments: [
-            tx.object(buyObject.MINT_ADMIN_CAP_ID),
-            tx.object(buyObject.MINT_SETTING_ID),   
+            tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+            tx.object(buyObject[MINT_SETTING_ID]),   
             tx.pure.u64(amount),
             ]
         });

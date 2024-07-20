@@ -40,10 +40,10 @@ export default async () => {
   tx.moveCall({
     target: `${packageId}::water_cooler::initialize_water_cooler`,
     arguments: [
-      tx.object(buyObject.WATER_COOLER_ADMIN_ID),
-      tx.object(buyObject.WATER_COOLER_ID),
-      tx.object(buyObject.REGISTRY_ID),
-      tx.object(buyObject.COLLECTION_ID),
+      tx.object(buyObject[WATER_COOLER_ADMIN_ID]),
+      tx.object(buyObject[WATER_COOLER_ID]),
+      tx.object(buyObject[REGISTRY_ID]),
+      tx.object(buyObject[COLLECTION_ID]),
     ]
   });
 
@@ -54,22 +54,22 @@ export default async () => {
   });
   
   let initObjects: InitObjectInterface = {
-    MIZU_NFT_IDS: "",
-    DIGEST: "",
+    mizuNFTIDs: [{}],
+    digest: "",
   };
   const mizuNFTIdArrayObjects = await getMoveObjectArray(MIZU_NFT, objectChange);
-  initObjects.MIZU_NFT_IDS = mizuNFTIdArrayObjects;
-  initObjects.DIGEST = objectChange?.digest;
+  initObjects[MIZU_NFT_IDS] = mizuNFTIdArrayObjects as [any];
+  initObjects[DIGEST] = objectChange?.digest;
   await writeFile(`${config.network}_${INIT_OBJECTS}`, initObjects);
   
   
   let initObjectIds: InitObjectInterface = {
-    MIZU_NFT_IDS: "",
-    DIGEST: "",
+    mizuNFTIDs: [{}],
+    digest: "",
   };
   const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
-  initObjectIds.MIZU_NFT_IDS = mizuNFTIdArray;
-  initObjectIds.DIGEST = objectChange?.digest;
+  initObjectIds[MIZU_NFT_IDS] = mizuNFTIdArray as [any];
+  initObjectIds[DIGEST] = objectChange?.digest;
   await writeFile(`${config.network}_${INIT}`, initObjectIds);
 
   console.log("Your Water Cooler has been initiated.");

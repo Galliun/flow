@@ -13,6 +13,7 @@ import { writeFile, readFile } from "../../utils/fileUtils";
 import { 
   MINT_ADMIN_CAP_ID,
   REGISTRY_ID,
+  MIZU_NFT_IDS,
   REVEAL,
   BUY,
   INIT_OBJECTS
@@ -46,9 +47,9 @@ export default async () => {
 
   for (let i = 0; i < data.metadata.length; i++) {
     console.log(`Revealing NFT #${i + 1}`);
-    const nftData = data.metadata[i];
+    const nftData = data.metadata[i];    
 
-    let nftMoveObject = findNFT(initObject?.MIZU_NFT_IDS, nftData.number);
+    let nftMoveObject = findNFT(initObject[MIZU_NFT_IDS], nftData.number);
 
     const tx = new Transaction();
 
@@ -75,8 +76,8 @@ export default async () => {
     tx.moveCall({
       target: `${packageId}::mint::admin_reveal_nft`,
       arguments: [
-        tx.object(buyObject.MINT_ADMIN_CAP_ID),
-        tx.object(buyObject.REGISTRY_ID),
+        tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+        tx.object(buyObject[REGISTRY_ID]),
         tx.object(nftMoveObject?.data?.objectId),
         keys,
         values,

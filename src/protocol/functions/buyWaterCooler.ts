@@ -93,26 +93,26 @@ export default async () => {
     });
 
     let buyObjects: buyObjectInterface = {
-      WATER_COOLER_ID: null,
-      WATER_COOLER_ADMIN_ID: null,
-      REGISTRY_ID: null,
-      REGISTRY_ADMIN_CAP_ID: null,
-      MINT_SETTING_ID: null,
-      MINT_WAREHOUSE_ID: null,
-      MINT_ADMIN_CAP_ID: null,
-      COLLECTION_ID: null,
-      DIGEST: ''
+      waterCoolerId: '',
+      waterCoolerAdminCapId: '',
+      registryId: '',
+      registryAdminCapId: '',
+      mintSettingId: '',
+      warehouseId: '',
+      mintAdminCapId: '',
+      collectionId: '',
+      digest: ''
     };
 
-    buyObjects.WATER_COOLER_ID= await getObjectIdJson(WATER_COOLER, objectChange);
-    buyObjects.WATER_COOLER_ADMIN_ID = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
-    buyObjects.REGISTRY_ID = await getObjectIdJson(REGISTRY, objectChange);
-    buyObjects.REGISTRY_ADMIN_CAP_ID = await getObjectIdJson(REGISTRY_ADMIN, objectChange);
-    buyObjects.MINT_SETTING_ID = await getObjectIdJson(MINT_SETTINGS, objectChange);
-    buyObjects.MINT_WAREHOUSE_ID = await getObjectIdJson(MINT_WAREHOUSE, objectChange);
-    buyObjects.MINT_ADMIN_CAP_ID = await getObjectIdJson(MINT_ADMIN, objectChange);
-    buyObjects.COLLECTION_ID = await getObjectIdJson(COLLECTION, objectChange);;
-    buyObjects.DIGEST = objectChange?.digest;
+    buyObjects[WATER_COOLER_ID] = await getObjectIdJson(WATER_COOLER, objectChange) as string;
+    buyObjects[WATER_COOLER_ADMIN_ID] = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange) as string;
+    buyObjects[REGISTRY_ID] = await getObjectIdJson(REGISTRY, objectChange) as string;
+    buyObjects[REGISTRY_ADMIN_CAP_ID] = await getObjectIdJson(REGISTRY_ADMIN, objectChange) as string;
+    buyObjects[MINT_SETTING_ID] = await getObjectIdJson(MINT_SETTINGS, objectChange) as string;
+    buyObjects[MINT_WAREHOUSE_ID] = await getObjectIdJson(MINT_WAREHOUSE, objectChange) as string;
+    buyObjects[MINT_ADMIN_CAP_ID] = await getObjectIdJson(MINT_ADMIN, objectChange) as string;
+    buyObjects[COLLECTION_ID] = await getObjectIdJson(COLLECTION, objectChange) as string;
+    buyObjects[DIGEST] = objectChange?.digest;
 
     await writeFile(`${config.network}_${BUY}`, buyObjects);
     console.log(`You can check output file here: output/${config.network}_${BUY}`)
