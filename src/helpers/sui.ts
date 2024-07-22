@@ -14,7 +14,8 @@ export const faucet = async () => {
     const address = getAddress();
 
     const response = await requestSuiFromFaucetV0({
-      host: getFaucetHost(config.network as "testnet" | "devnet"),
+      // host: getFaucetHost(config.network as "testnet" | "devnet"),
+      host: getFaucetHost(config.network as any),
       recipient: address,
 
     });
