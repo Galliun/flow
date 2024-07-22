@@ -74,7 +74,7 @@ export default async () => {
     });
 
     tx.moveCall({
-      target: `${packageId}::mint::admin_reveal_nft`,
+      target: `${packageId}::orchestrator::admin_reveal_nft`,
       arguments: [
         tx.object(buyObject[MINT_ADMIN_CAP_ID]),
         tx.object(buyObject[REGISTRY_ID]),

@@ -11,7 +11,7 @@ import { getClient, getKeypair } from "../../utils/suiUtils";
 import { getPacakgeId } from "../../utils/waterCooler";
 import readTickets from "../../utils/readTickets";
 import { readFile } from "../../utils/fileUtils";
-import { MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID, BUY } from "../../constants";
+import { MINT_ADMIN_CAP_ID, WATER_COOLER_ID, BUY } from "../../constants";
 import { buyObjectInterface } from '../../interface/buyObjectInterface';
 
 const distributeTickets = async (ticketType: string) => {
@@ -34,10 +34,10 @@ const distributeTickets = async (ticketType: string) => {
             const tx = new Transaction();
 
             tx.moveCall({
-                target: `${packageId}::mint::create_${ticketType}_ticket`,
+                target: `${packageId}::orchestrator::create_${ticketType}_ticket`,
                 arguments: [
                     tx.object(buyObject[MINT_ADMIN_CAP_ID]),
-                    tx.object(buyObject[MINT_WAREHOUSE_ID]),
+                    tx.object(buyObject[WATER_COOLER_ID]),
                     tx.object(address)
                 ],
             });

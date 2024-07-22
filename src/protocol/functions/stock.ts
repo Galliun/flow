@@ -36,7 +36,7 @@ export default async () => {
 
   tx.setGasBudget(config.gasBudgetAmount);
   tx.moveCall({
-    target: `${packageId}::mint::add_to_mint_warehouse`,
+    target: `${packageId}::orchestrator::stock_warehouse`,
     arguments: [
       tx.object(buyObject[MINT_ADMIN_CAP_ID]),
       tx.object(buyObject[WATER_COOLER_ID]),
