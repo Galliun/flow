@@ -32,7 +32,7 @@ export default async (options: any) => {
         tx.setGasBudget(config.gasBudgetAmount);
     
         tx.moveCall({
-            target: `${packageId}::mint::set_mint_price`,
+            target: `${packageId}::orchestrator::set_mint_price`,
             arguments: [
             tx.object(buyObject[MINT_ADMIN_CAP_ID]),
             tx.object(buyObject[MINT_SETTING_ID]),   
@@ -61,7 +61,7 @@ export default async (options: any) => {
         tx.setGasBudget(config.gasBudgetAmount);
     
         tx.moveCall({
-            target: `${packageId}::mint::set_mint_phase`,
+            target: `${packageId}::orchestrator::set_mint_phase`,
             arguments: [
             tx.object(mintAdminCapObjectId),
             tx.object(mintSettingsObjectId),   
@@ -90,7 +90,7 @@ export default async (options: any) => {
         tx.setGasBudget(config.gasBudgetAmount);
     
         tx.moveCall({
-            target: `${packageId}::mint::set_mint_status`,
+            target: `${packageId}::orchestrator::set_mint_status`,
             arguments: [
             tx.object(mintAdminCapObjectId),
             tx.object(mintSettingsObjectId),   
