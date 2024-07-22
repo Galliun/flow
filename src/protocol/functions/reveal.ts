@@ -12,6 +12,9 @@ import { getPacakgeId } from "../../utils/waterCooler";
 import { writeFile, readFile } from "../../utils/fileUtils";
 import { 
   MINT_ADMIN_CAP_ID,
+  WATER_COOLER_ADMIN_ID,
+  WATER_COOLER_ID,
+  COLLECTION_ID,
   REGISTRY_ID,
   CAPSULE_IDS,
   REVEAL,
@@ -73,11 +76,26 @@ export default async () => {
       elements: pureValues
     });
 
+    // old
+    // tx.moveCall({
+    //   target: `${packageId}::orchestrator::admin_reveal_nft`,
+    //   arguments: [
+    //     tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+    //     tx.object(buyObject[REGISTRY_ID]),
+    //     tx.object(nftMoveObject?.data?.objectId),
+    //     keys,
+    //     values,
+    //     tx.pure.string(nftData.image_url),
+    //   ]
+    // });
+    
     tx.moveCall({
-      target: `${packageId}::orchestrator::admin_reveal_nft`,
+      target: `${packageId}::water_cooler::reveal_nft`,
       arguments: [
-        tx.object(buyObject[MINT_ADMIN_CAP_ID]),
+        tx.object(buyObject[WATER_COOLER_ADMIN_ID]),
+        tx.object(buyObject[WATER_COOLER_ID]),
         tx.object(buyObject[REGISTRY_ID]),
+        tx.object(buyObject[COLLECTION_ID]),
         tx.object(nftMoveObject?.data?.objectId),
         keys,
         values,
