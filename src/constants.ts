@@ -17,9 +17,9 @@ export const REVEAL = "reveal";
 // ==== Sui object types ====
 export const WATER_COOLER = "::water_cooler::WaterCooler";
 export const WATER_COOLER_ADMIN = "::water_cooler::WaterCoolerAdminCap";
-export const MINT_SETTINGS = "::mint::MintSettings";
-export const MINT_WAREHOUSE = "::mint::MintWarehouse";
-export const MINT_ADMIN = "::mint::MintAdminCap";
+export const MINT_SETTINGS = "::orchestrator::Settings";
+export const MINT_WAREHOUSE = "::orchestrator::Warehouse";
+export const MINT_ADMIN = "::orchestrator::OrchAdminCap";
 export const REGISTRY = "::registry::Registry";
 export const REGISTRY_ADMIN = "::registry::RegistryAdminCap";
 export const COLLECTION = "::collection::Collection";
