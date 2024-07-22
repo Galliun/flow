@@ -23,7 +23,7 @@ export const MINT_ADMIN = "::orchestrator::OrchAdminCap";
 export const REGISTRY = "::registry::Registry";
 export const REGISTRY_ADMIN = "::registry::RegistryAdminCap";
 export const COLLECTION = "::collection::Collection";
-export const MIZU_NFT = "::mizu_nft::MizuNFT";
+export const CAPSULE = "::capsule::Capsule";
 
 // ==== Config objects ====
 // This is preset
@@ -34,9 +34,9 @@ export const TRANSFER_POLICY_ID = "transferPolicyId";
 export const WATER_COOLER_ID = "waterCoolerId";
 export const WATER_COOLER_ADMIN_ID = "waterCoolerAdminCapId";
 export const COLLECTION_ID = "collectionId";
-export const MINT_SETTING_ID = "mintSettingId";
+export const MINT_SETTING_ID = "settingsId";
 export const MINT_WAREHOUSE_ID = "warehouseId";
 export const MINT_ADMIN_CAP_ID = "mintAdminCapId";
 export const REGISTRY_ID = "registryId";
 export const REGISTRY_ADMIN_CAP_ID = "registryAdminCapId";
-export const MIZU_NFT_IDS = "mizuNFTIDs";
+export const CAPSULE_IDS = "CapsuleIDs";

@@ -1,5 +1,5 @@
 // todo::not correct interface
 export interface InitObjectInterface {
-    mizuNFTIDs: any[],
+    CapsuleIDs: any[],
     digest: string
 }

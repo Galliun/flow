@@ -13,7 +13,7 @@ import { getClient, getKeypair } from "../../utils/suiUtils";
 import { getPacakgeId } from "../../utils/waterCooler";
 import { readFile, writeFile } from "../../utils/fileUtils";
 import { 
-  WATER_COOLER_ID, MIZU_NFT_IDS,
+  WATER_COOLER_ID, CAPSULE_IDS,
   MINT_ADMIN_CAP_ID, MINT_WAREHOUSE_ID,
   DIGEST, STOCK, INIT, BUY
 } from "../../constants";
@@ -40,7 +40,7 @@ export default async () => {
     arguments: [
       tx.object(buyObject[MINT_ADMIN_CAP_ID]),
       tx.object(buyObject[WATER_COOLER_ID]),
-      tx.makeMoveVec({ elements: initObject[MIZU_NFT_IDS] }),
+      tx.makeMoveVec({ elements: initObject[CAPSULE_IDS] }),
       tx.object(buyObject[MINT_WAREHOUSE_ID]),
     ]
   });

@@ -13,7 +13,7 @@ import { writeFile, readFile } from "../../utils/fileUtils";
 import { 
   MINT_ADMIN_CAP_ID,
   REGISTRY_ID,
-  MIZU_NFT_IDS,
+  CAPSULE_IDS,
   REVEAL,
   BUY,
   INIT_OBJECTS
@@ -49,7 +49,7 @@ export default async () => {
     console.log(`Revealing NFT #${i + 1}`);
     const nftData = data.metadata[i];    
 
-    let nftMoveObject = findNFT(initObject[MIZU_NFT_IDS], nftData.number);
+    let nftMoveObject = findNFT(initObject[CAPSULE_IDS], nftData.number);
 
     const tx = new Transaction();
 

@@ -15,7 +15,7 @@ export interface buyObjectInterface {
     waterCoolerAdminCapId: string,
     registryId: string,
     registryAdminCapId: string,
-    mintSettingId: string,
+    settingsId: string,
     warehouseId: string,
     mintAdminCapId: string,
     collectionId: string,

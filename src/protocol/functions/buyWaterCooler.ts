@@ -97,7 +97,7 @@ export default async () => {
       waterCoolerAdminCapId: '',
       registryId: '',
       registryAdminCapId: '',
-      mintSettingId: '',
+      settingsId: '',
       warehouseId: '',
       mintAdminCapId: '',
       collectionId: '',

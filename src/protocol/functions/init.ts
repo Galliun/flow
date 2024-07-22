@@ -20,8 +20,8 @@ import {
   INIT,
   INIT_OBJECTS,
   BUY,
-  MIZU_NFT,
-  MIZU_NFT_IDS
+  CAPSULE,
+  CAPSULE_IDS
  } from "../../constants";
 import { buyObjectInterface } from '../../interface/buyObjectInterface';
 import {InitObjectInterface} from "../../interface/initObjectInterface";
@@ -54,21 +54,21 @@ export default async () => {
   });
   
   let initObjects: InitObjectInterface = {
-    mizuNFTIDs: [{}],
+    CapsuleIDs: [{}],
     digest: "",
   };
-  const mizuNFTIdArrayObjects = await getMoveObjectArray(MIZU_NFT, objectChange);
-  initObjects[MIZU_NFT_IDS] = mizuNFTIdArrayObjects as [any];
+  const mizuNFTIdArrayObjects = await getMoveObjectArray(CAPSULE, objectChange);
+  initObjects[CAPSULE_IDS] = mizuNFTIdArrayObjects as [any];
   initObjects[DIGEST] = objectChange?.digest;
   await writeFile(`${config.network}_${INIT_OBJECTS}`, initObjects);
   
   
   let initObjectIds: InitObjectInterface = {
-    mizuNFTIDs: [{}],
+    CapsuleIDs: [{}],
     digest: "",
   };
-  const mizuNFTIdArray = await getObjectIdArrayFromObject(MIZU_NFT, objectChange);
-  initObjectIds[MIZU_NFT_IDS] = mizuNFTIdArray as [any];
+  const mizuNFTIdArray = await getObjectIdArrayFromObject(CAPSULE, objectChange);
+  initObjectIds[CAPSULE_IDS] = mizuNFTIdArray as [any];
   initObjectIds[DIGEST] = objectChange?.digest;
   await writeFile(`${config.network}_${INIT}`, initObjectIds);
 
