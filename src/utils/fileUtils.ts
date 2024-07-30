@@ -1,9 +1,9 @@
 // Node imports
 import fs from 'node:fs';
 
-import config from "../../config.json" assert { type: "json" };
+import config from "../../config.json";
 
-export const writeFile = (fileName, object) => {
+export const writeFile = (fileName: string, object: any) => {
   return new Promise(async (resolve, reject) => {
     const folderName = '.outputs';
 
@@ -24,7 +24,7 @@ export const writeFile = (fileName, object) => {
   });
 }
 
-export const readFile = (fileName) => {
+export const readFile = (fileName: string) => {
   return new Promise(async (resolve, reject) => {
 
     // This path is used to check of the file exists because fs.existsSync checks from the current working dir

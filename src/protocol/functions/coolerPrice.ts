@@ -2,8 +2,8 @@
 import 'dotenv/config';
 
 // Local imports
-import { mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
+import { mistToSui } from "../../utils/suiUtils";
+import { getCoolerPrice } from "../helpers/getCoolerPrice";
 
 // Display the price of a Water Cooler in $SUI
 export default async () => {

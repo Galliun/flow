@@ -1,7 +1,7 @@
 // Node imports
 import fs from 'node:fs';
 
-export default (ticketType) => {
+export default (ticketType: string): Promise<any> => {
   return new Promise(async (resolve, reject) => {
     // This path is used to check of the file exists because fs.existsSync checks from the current working dir
     const dataPath = `assets/${ticketType}.json`;

@@ -1,11 +1,10 @@
-#!/usr/bin/env -S node --no-warnings=ExperimentalWarning
-
-import packageInfo from '../package.json' assert { type: "json" };
+#!/usr/bin/env -S tsx --no-warnings=ExperimentalWarning
+import packageInfo from '../package.json';
 import { Command } from 'commander';
 
-import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig.js';
-import {balance, faucet, address, createAddress} from './helpers/sui.js';
-import { 
+import { getCurrentNetwork, switchNetwork } from './helpers/flowConfig';
+import {balance, faucet, address, createAddress} from './helpers/sui';
+import {
   coolerPrice,
   buyWaterCooler,
   init,
@@ -14,7 +13,7 @@ import {
   details,
   reveal,
   distribute
-} from './protocol/index.js';
+} from './protocol/index';
 
 const program = new Command();
 

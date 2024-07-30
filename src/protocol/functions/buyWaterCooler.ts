@@ -6,13 +6,14 @@ import { Transaction } from '@mysten/sui/transactions';
 import inquirer from 'inquirer';
 
 // Local imports
-import config from "../../../config.json" assert { type: "json" };
-import collection from "../../../collection.json" assert { type: "json" };
-import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils.js";
-import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler.js";
-import { getObjectIdJson } from "../../utils/getObjectIdJson.js";
-import { getCoolerPrice } from "../helpers/getCoolerPrice.js";
-import { writeFile } from "../../utils/fileUtils.js";
+import config from "../../../config.json";
+// @ts-ignore
+import collection from "../../../collection.json";
+import { getClient, getKeypair, mistToSui } from "../../utils/suiUtils";
+import { getCoolerFactoryId, getPacakgeId, getWaterCoolerDetails } from "../../utils/waterCooler";
+import { getObjectIdJson } from "../../utils/getObjectIdJson";
+import { getCoolerPrice } from "../helpers/getCoolerPrice";
+import { writeFile } from "../../utils/fileUtils";
 import { 
   WATER_COOLER,
   WATER_COOLER_ID,
@@ -31,32 +32,37 @@ import {
   COLLECTION_ID,
   DIGEST,
   BUY
- } from "../../constants.js";
+ } from "../../constants";
+import { buyObjectInterface } from '../../interface/buyObjectInterface';
+import { isCollectionFilled } from "../../utils/collectionUtils";
+
 
 
 // Buy a Water Cooler from the Factory in the Water Cooler Protocol
 export default async () => {
   const price = await getCoolerPrice();
 
+  // Before asking to buy, ensure that collection.json is filled. Otherwise, an error will occur
+  isCollectionFilled(collection)
+
+
   const prompt = inquirer.createPromptModule();
   const answers = await prompt([
     {
       type: "input",
       name: "confirm",
-      message: `You are about to buy a Water Cooler for ${mistToSui(price)} $SUI. To confirm type y or n to cancel:`
+      message: `Do you want to buy a Water Cooler(to create a new collection) for ${mistToSui(price)} $SUI?(yes/y or no/n):`
     }
   ]);
 
   // Execute buy order to protocol
-  if(answers.confirm == "y") {
+  if(answers.confirm === "y" || answers.confirm === "yes") {
     console.log(`Ordering Water Cooler now.`);
 
     // const CoolerDetails = await getWaterCoolerDetails();
-
     console.log("Shipping... Your Water Cooler will arrive soon");
 
     // const { name, description, supply, treasury, image_url, placeholder_image_url } = CoolerDetails;
-
     const keypair = getKeypair();
     const client = getClient();
     const packageId = getPacakgeId();
@@ -65,7 +71,6 @@ export default async () => {
     tx.setGasBudget(config.gasBudgetAmount);
 
     const [coin] = tx.splitCoins(tx.gas, [price]);
-
     const coolerFactoryId = getCoolerFactoryId();
 
     tx.moveCall({
@@ -81,29 +86,38 @@ export default async () => {
         tx.pure.address(collection.treasury)
       ]
     });
-  
     const objectChange = await client.signAndExecuteTransaction({
       signer: keypair,
       transaction: tx,
       options: { showObjectChanges: true }
     });
 
-    let buyObjects = {};
+    let buyObjects: buyObjectInterface = {
+      waterCoolerId: '',
+      waterCoolerAdminCapId: '',
+      registryId: '',
+      registryAdminCapId: '',
+      settingsId: '',
+      warehouseId: '',
+      mintAdminCapId: '',
+      collectionId: '',
+      digest: ''
+    };
 
-    buyObjects[WATER_COOLER_ID] = await getObjectIdJson(WATER_COOLER, objectChange);
-    buyObjects[WATER_COOLER_ADMIN_ID] = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange);
-    buyObjects[REGISTRY_ID] = await getObjectIdJson(REGISTRY, objectChange);
-    buyObjects[REGISTRY_ADMIN_CAP_ID] = await getObjectIdJson(REGISTRY_ADMIN, objectChange);
-    buyObjects[MINT_SETTING_ID] = await getObjectIdJson(MINT_SETTINGS, objectChange);
-    buyObjects[MINT_WAREHOUSE_ID] = await getObjectIdJson(MINT_WAREHOUSE, objectChange);
-    buyObjects[MINT_ADMIN_CAP_ID] = await getObjectIdJson(MINT_ADMIN, objectChange);
-    buyObjects[COLLECTION_ID] = await getObjectIdJson(COLLECTION, objectChange);;
+    buyObjects[WATER_COOLER_ID] = await getObjectIdJson(WATER_COOLER, objectChange) as string;
+    buyObjects[WATER_COOLER_ADMIN_ID] = await getObjectIdJson(WATER_COOLER_ADMIN, objectChange) as string;
+    buyObjects[REGISTRY_ID] = await getObjectIdJson(REGISTRY, objectChange) as string;
+    buyObjects[REGISTRY_ADMIN_CAP_ID] = await getObjectIdJson(REGISTRY_ADMIN, objectChange) as string;
+    buyObjects[MINT_SETTING_ID] = await getObjectIdJson(MINT_SETTINGS, objectChange) as string;
+    buyObjects[MINT_WAREHOUSE_ID] = await getObjectIdJson(MINT_WAREHOUSE, objectChange) as string;
+    buyObjects[MINT_ADMIN_CAP_ID] = await getObjectIdJson(MINT_ADMIN, objectChange) as string;
+    buyObjects[COLLECTION_ID] = await getObjectIdJson(COLLECTION, objectChange) as string;
     buyObjects[DIGEST] = objectChange?.digest;
 
     await writeFile(`${config.network}_${BUY}`, buyObjects);
-
+    console.log(`You can check output file here: output/${config.network}_${BUY}`)
     console.log("Your Water Cooler has arrived.");
   } else {
-    console.log(`Buy order canceled.`);
+    console.log(`Order canceled`);
   }
 }
