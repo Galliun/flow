@@ -75,19 +75,6 @@ export default async () => {
       type: `0x1::string::String`,
       elements: pureValues
     });
-
-    // old
-    // tx.moveCall({
-    //   target: `${packageId}::orchestrator::admin_reveal_nft`,
-    //   arguments: [
-    //     tx.object(buyObject[MINT_ADMIN_CAP_ID]),
-    //     tx.object(buyObject[REGISTRY_ID]),
-    //     tx.object(nftMoveObject?.data?.objectId),
-    //     keys,
-    //     values,
-    //     tx.pure.string(nftData.image_url),
-    //   ]
-    // });
     
     tx.moveCall({
       target: `${packageId}::water_cooler::reveal_nft`,
