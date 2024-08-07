@@ -8,10 +8,10 @@
         "transferPolicyId": ""
     },
     "testnet": {
-        "packageId": "0x4b9f6d5ffee2b8d53913587ed52a0aa9229ca9da4df7899f0f908155735a68d5",
-        "coolerFactoryId": "0x7fb45c6371f19d26dda6041c784c368dab6c1b539a192f79f914ba57ceaf86f0",
-        "factorySettingsId": "0xb8e3dd20869dd4b3807de3bf80df1c5d8ed121c83b488e9ec5bef7184d059f9b",
-        "transferPolicyId": "0x205deed59de1935641ace81eb936c5a59853b405e8e29769d09065b16b885f5a"
+        "packageId": "0x4f1868973f642f8960a3d2e564dcc500bd446a5d0421b64e7595f3fde88b3e48",
+        "coolerFactoryId": "0x41780591771accdd8c7710707459710e322aedc6a4ecd037e718d5e5d32ee3c6",
+        "factorySettingsId": "0xbe98bf94821688c817ffe48d7dfeb2b28baade88ed1a93ca34e617b6f26b276b",
+        "transferPolicyId": "0x9e4d4eb145ac90fae9bf46d6c7210d282445c9b648461fe218f07a8ba55f04d6"
     },
     "mainnet": {
         "packageId": "",
