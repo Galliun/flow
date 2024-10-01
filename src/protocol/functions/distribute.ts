@@ -3,6 +3,7 @@ import 'dotenv/config';
 
 // Packages imports
 import { Transaction } from '@mysten/sui/transactions';
+import _ from 'lodash';
 
 // Local imports
 import config from "../../../config.json";
@@ -24,21 +25,26 @@ const distributeTickets = async (ticketType: string) => {
     const buyObject = await readFile(`${config.network}_${BUY}`) as buyObjectInterface;
     const ticketListObject = await readTickets(ticketType);
 
-    for (let i = 0; i < ticketListObject.ticketList.length; i++) {
-        const ticketObject = ticketListObject.ticketList[i];
-        
-        for (let j = 0; j < ticketObject.amount; j++) {
+    const ticketListChunk = _.chunk(ticketListObject.ticketList, 250);
+    
 
-            const address = ticketObject.address;
+    for (let i = 0; i < ticketListChunk.length; i++) {
+        const ticketObject: any = ticketListChunk[i];
 
             const tx = new Transaction();
 
+            const addresses = tx.makeMoveVec({
+                type: `address`,
+                elements: ticketObject.map((ticket: string) => tx.pure.address(ticket)),
+            });
+
+
             tx.moveCall({
-                target: `${packageId}::orchestrator::create_${ticketType}_ticket`,
+                target: `${packageId}::orchestrator::create_${ticketType}_ticket_bulk`,
                 arguments: [
                     tx.object(buyObject[MINT_ADMIN_CAP_ID]),
                     tx.object(buyObject[WATER_COOLER_ID]),
-                    tx.object(address)
+                    addresses
                 ],
             });
     
@@ -53,8 +59,7 @@ const distributeTickets = async (ticketType: string) => {
                 process.exit(1);
             }
 
-            console.log("Ticket sent to:", address);
-        }
+            console.log(`Ticket batch ${i + 1} sent`);
     }
     console.log(`All tickets have been distributed`);
 }
